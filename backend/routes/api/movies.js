@@ -15,7 +15,7 @@ router.get('/allmovies', (req, res) => {
 router.get('/:id', (req, res) => {
     Movies.findById(req.params.id)
         .then(movie => res.json(movie))
-        .catch(err => res.status(404).json({nomoviefound: 'No Movie Found'}))
+        .catch(err => res.status(404).json({nomoviefound: 'No movie found..'}))
 })
 
 module.exports = router;
