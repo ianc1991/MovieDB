@@ -1,0 +1,19 @@
+.carousel-inner {
+    max-height: 50vh;
+}
+
+.carousel-item img {
+    height: 50vh;
+    object-fit: contain;
+    object-position: center;
+}
+
+.container {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+.glowSign {
+    max-width: 400px;
+    width: auto;
+}
