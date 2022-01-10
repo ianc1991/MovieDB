@@ -3,21 +3,40 @@ const connectDB = require("./config/db")
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const logger = require("morgan");
-const moviesRouter = require("./routes/api/movies")
+const moviesRouter = require("./routes/api/movies");
+const Mongoose  = require("mongoose");
+const moviesCtrl = require("./controllers/moviesController");
 
 const app = express();
 const PORT = process.env.PORT || 4000;
 
+// Connect to MongoDB
 connectDB();
 
 app.use("/movies", moviesRouter);
 app.use(cors());
+
+// Morgan logger
 app.use(logger('dev'));
+
 // TODO - uninstall body parser maybe
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
-app.listen(PORT, () => {
-  console.log("Server is running on Port: " + PORT);
-});
+
+// Notify of connection and only then listen on PORT
+Mongoose.connection.once('open', () => {
+  console.log('Connected to MongoDB')
+  app.listen(PORT, () => {
+    console.log("Server is running on Port: " + PORT);
+  })
+    try {
+      console.log('Initializing Database...')
+      moviesCtrl.getAllMovies().then(console.log('Database Initialized: ' + moviesCtrl.movies));
+    } catch (e) {
+      console.error('Error initializing database: ' + e);
+    }
+  
+})
+
 
 module.exports = app;

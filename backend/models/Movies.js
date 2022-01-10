@@ -8,6 +8,11 @@ const MovieSchema = new mongoose.Schema ({
     title: {
         type: String,
         required: true
+    },
+    
+    plot: {
+        type: String,
+        required: false
     }
 });
 
