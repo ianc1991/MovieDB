@@ -4,10 +4,13 @@ const Movies = require("../../models/Movies");
 const moviesCtrl = require("../../controllers/moviesController")
 
 
-//Get all movies
+// Get all movies
 router.route('/allmovies').get(moviesCtrl.getAllMovies);
 
-//Get movie by id
+// New Movies
+router.route('/').get(moviesCtrl.newMovies);
+
+// Get movie by id
 router.route('/:id').get(moviesCtrl.getMovieById);
 
 module.exports = router;

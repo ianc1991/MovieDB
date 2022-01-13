@@ -1,7 +1,3 @@
-.carousel-inner {
-    max-height: 50vh;
-}
-
 .carousel-item img {
     height: 50vh;
     object-fit: contain;
@@ -12,6 +8,10 @@
     display: flex;
     align-items: center;
     flex-direction: column;
+}
+.carousel-inner{
+    min-width: 800px;
+    background-color: black;
 }
 .glowSign {
     max-width: 400px;

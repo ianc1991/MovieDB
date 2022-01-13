@@ -19,7 +19,7 @@ app.use(cors());
 // Morgan logger
 app.use(logger('dev'));
 
-// TODO - uninstall body parser maybe
+// TODO - uninstall body parser or read
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
@@ -28,14 +28,7 @@ Mongoose.connection.once('open', () => {
   console.log('Connected to MongoDB')
   app.listen(PORT, () => {
     console.log("Server is running on Port: " + PORT);
-  })
-    try {
-      console.log('Initializing Database...')
-      moviesCtrl.getAllMovies().then(console.log('Database Initialized: ' + moviesCtrl.movies));
-    } catch (e) {
-      console.error('Error initializing database: ' + e);
-    }
-  
+  })  
 })
 
 

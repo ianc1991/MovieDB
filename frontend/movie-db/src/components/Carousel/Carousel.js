@@ -2,10 +2,32 @@ import comedyGenre from '../../assets/ComedyGenreCropped.jpg';
 import actionGenre from '../../assets/ActionGenreCropped.jpg'
 import glowSign from '../../assets/NewReleases.png';
 import './carousel.css';
+import movieDataSrv from '../../Services/movies';
+import { useState, useEffect } from "react";
+
+
 
 
 
 const Carousel = () => {
+
+    const [newMovies, setNewMovies] = useState([]);
+
+    useEffect(() => {
+        retrieveNewMovies();
+    }, []);
+
+    const retrieveNewMovies = () => {
+        movieDataSrv.getNew()
+            .then(response => {
+                console.log(response.data);
+                setNewMovies(response.data);
+            })
+            .catch(e => {
+                console.log(e);
+            });
+    };
+
     return (
         <div className='container'>
             <img className='glowSign' src={glowSign} alt='New Releases'></img>
@@ -13,18 +35,17 @@ const Carousel = () => {
                 <ol className="carousel-indicators">
                     <li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" className="active"></li>
                     <li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"></li>
+                    <li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"></li>
+                    <li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="3"></li>
+                    <li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="4"></li>
                 </ol>
                 <div className="carousel-inner">
-                    <div className="carousel-item active">
-                        <img className="d-block w-100" src={comedyGenre} alt="First slide"  />
-                        <div className="carousel-caption d-md-block">
-                            <h5>Movie Name</h5>
-                            <p>Movie description...</p>
-                        </div>
-                    </div>
-                    <div className="carousel-item">
-                        <img className="d-block w-100" src={actionGenre} alt="Second slide"  />
-                    </div>
+                    {newMovies.map((movie, i) => (
+                            <div key={i} className={i === 0 ? "carousel-item active" : "carousel-item"} >
+                                <img className="d-block w-100" src={movie.poster} alt="Movie Slide"  />
+                            </div>
+                        )
+                    )}
                 </div>
                 <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
                     <span className="carousel-control-prev-icon" aria-hidden="true"></span>
