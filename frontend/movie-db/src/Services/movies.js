@@ -5,6 +5,10 @@ class MovieDataService {
     getNew() {
         return http.get('/');
     }
+
+    getMovieDetailsById(id) {
+        return http.get(`/${id}`)
+    }
 }
 
 export default new MovieDataService();

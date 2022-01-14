@@ -1,13 +1,10 @@
 import './App.css';
 // Components
 import Navbar from './components/Navbar';
-import Carousel from './components/Carousel/Carousel';
+import Home from './components/Home/Home'
+import MovieDetails from './components/MovieDetails/MovieDetails';
 
-
-// TODO - Make pictures on Carousel same size. Possibly what is causing the arrows to spread out while sliding?
-// TODO - Link newest movies to Carousel
-
-
+import { Route, Routes } from 'react-router-dom';
 
 function App() {
   return (
@@ -15,7 +12,10 @@ function App() {
       <header className="headerC">
         <Navbar />
       </header>
-        <Carousel />
+      <Routes>
+        <Route exact path="/" element={<Home />} />
+        <Route path="/moviedetails" element={<MovieDetails />} />
+      </Routes>
     </div>
   );
 }

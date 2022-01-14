@@ -1,14 +1,12 @@
-import comedyGenre from '../../assets/ComedyGenreCropped.jpg';
-import actionGenre from '../../assets/ActionGenreCropped.jpg'
-import glowSign from '../../assets/NewReleases.png';
+import glowSign from '../../../assets/NewReleases.png';
 import './carousel.css';
-import movieDataSrv from '../../Services/movies';
+import movieDataSrv from '../../../Services/movies';
 import { useState, useEffect } from "react";
 
 
 // TODO - Pictures resize a tiny bit when changing slides. Mostly fixed, but could be tweaked more.
 
-// Carousel takes the 5 most recent released movies from MongoDB (as long as they also have a poster)
+// Carousel takes the 5 most recent released movies from MongoDB (as long as they also have a poster image). Data is .map() to .carousel-inner
 
 const Carousel = () => {
 
@@ -42,7 +40,7 @@ const Carousel = () => {
                 <div className="carousel-inner">
                     {newMovies.map((movie, i) => (
                             <div key={i} className={i === 0 ? "carousel-item active" : "carousel-item"} >
-                                <img className="d-block w-100" src={movie.poster} alt="Movie poster" />
+                                <a href={`/moviedetails?id=${movie._id}`}><img className="d-block w-100" src={movie.poster} alt="Movie poster" /></a>
                             </div>
                         )
                     )}
