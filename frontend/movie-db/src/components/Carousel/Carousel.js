@@ -6,8 +6,9 @@ import movieDataSrv from '../../Services/movies';
 import { useState, useEffect } from "react";
 
 
+// TODO - Pictures resize a tiny bit when changing slides. Mostly fixed, but could be tweaked more.
 
-
+// Carousel takes the 5 most recent released movies from MongoDB (as long as they also have a poster)
 
 const Carousel = () => {
 
@@ -20,7 +21,6 @@ const Carousel = () => {
     const retrieveNewMovies = () => {
         movieDataSrv.getNew()
             .then(response => {
-                console.log(response.data);
                 setNewMovies(response.data);
             })
             .catch(e => {
@@ -42,15 +42,15 @@ const Carousel = () => {
                 <div className="carousel-inner">
                     {newMovies.map((movie, i) => (
                             <div key={i} className={i === 0 ? "carousel-item active" : "carousel-item"} >
-                                <img className="d-block w-100" src={movie.poster} alt="Movie Slide"  />
+                                <img className="d-block w-100" src={movie.poster} alt="Movie poster" />
                             </div>
                         )
                     )}
                 </div>
-                <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                <button className="carousel-control-prev arrow" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
                     <span className="carousel-control-prev-icon" aria-hidden="true"></span>
                 </button>
-                <button className="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                <button className="carousel-control-next arrow" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
                     <span className="carousel-control-next-icon" aria-hidden="true"></span>
                 </button>
             </div>

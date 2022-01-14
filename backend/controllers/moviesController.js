@@ -16,7 +16,7 @@ const getMovieById = async (req, res) => {
     res.json(movie);
 }
 
-// 5 most recent releases
+// 5 most recent releases that have a poster image
 const newMovies = async (req, res) => {
     const sortedMoviesByDate = await Movies.find({poster:{$exists:true}}).sort({released: -1}).limit(5);
     res.json(sortedMoviesByDate);
