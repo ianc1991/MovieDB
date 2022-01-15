@@ -1,8 +1,41 @@
+.mainContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-left: 10px;
+}
+
+.titleContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 90%;
+    text-align: center;
+}
+
 h1, p {
     color: white;
 }
 
 .poster {
     height: 400px;
+}
+
+.posterContainer {
+    width: 90%;
+    display: flex;
+    justify-content: center;
+}
+
+.fullPlot {
+    width: 50%;
+}
+
+.genreContainer {
+    display: flex;
+}
+
+.genreButton {
+    margin: 5px;
 }
 

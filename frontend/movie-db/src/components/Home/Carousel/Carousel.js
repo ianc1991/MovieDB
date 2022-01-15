@@ -42,8 +42,7 @@ const Carousel = () => {
                             <div key={i} className={i === 0 ? "carousel-item active" : "carousel-item"} >
                                 <a href={`/moviedetails?id=${movie._id}`}><img className="d-block w-100" src={movie.poster} alt="Movie poster" /></a>
                             </div>
-                        )
-                    )}
+                        ))}
                 </div>
                 <button className="carousel-control-prev arrow" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
                     <span className="carousel-control-prev-icon" aria-hidden="true"></span>
