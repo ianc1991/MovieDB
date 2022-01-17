@@ -1,9 +1,8 @@
-.appC {
+body {
     background-image: url('./assets/background.jpg');
-    background-size: cover;
-    background-position: top;
     min-height: 100%;
-    height: 100vh;
-    position: relative;
-    overflow: scroll;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    background-size: cover;
 }

@@ -8,9 +8,8 @@
 .titleContainer {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    width: 90%;
-    text-align: center;
+    width: 50%;
+    text-align: left;
 }
 
 h1, p {
@@ -22,20 +21,25 @@ h1, p {
 }
 
 .posterContainer {
-    width: 90%;
+    width: 50%;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
 }
 
 .fullPlot {
     width: 50%;
+    background: rgba(25, 25, 25, 0.582);
 }
 
 .genreContainer {
     display: flex;
+    width: 50%;
 }
 
 .genreButton {
     margin: 5px;
 }
 
+.card {
+    min-width: 165px !important;
+}
