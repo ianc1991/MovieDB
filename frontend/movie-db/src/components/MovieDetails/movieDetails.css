@@ -1,8 +1,8 @@
 .mainContainer {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-left: 10px;
+        display: flex;
+        flex-direction: column;
+        margin-left: 10px;
+        align-items: center;
 }
 
 .titleContainer {
@@ -12,34 +12,62 @@
     text-align: left;
 }
 
-h1, p {
-    color: white;
-}
-
-.poster {
-    height: 400px;
-}
-
 .posterContainer {
     width: 50%;
     display: flex;
-    justify-content: space-between;
-}
-
-.fullPlot {
-    width: 50%;
-    background: rgba(25, 25, 25, 0.582);
+    flex-direction: column;
+    align-items: center;
 }
 
 .genreContainer {
-    display: flex;
+    display:inline;
     width: 50%;
+}
+.genreMapContainer {
+    display: inline;
 }
 
 .genreButton {
     margin: 5px;
 }
 
+h1, p {
+    color: white;
+}
+
+.poster {
+    max-height: 400px;
+    max-width: 280px;
+}
+
+
+.fullPlot {
+    width: 50%;
+    background: rgba(25, 25, 25, 0.582);
+}
+
+
 .card {
     min-width: 165px !important;
+    margin-top: 15px;
 }
+
+@media only screen and (min-width: 800px) {
+    .posterContainer {
+        justify-content: space-between;
+        flex-direction: row;
+    }
+
+    .titleContainer {
+
+    }
+
+    .mainContainer {
+        margin-left: 0;
+    }
+
+    .card {
+        margin-top: 0;
+        margin-left: 20px;
+    }
+  }
