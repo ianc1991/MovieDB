@@ -27,15 +27,17 @@ const MovieDetails = () => {
             });
     };
 
-    // TODO - handle movies with no rating/release date/runtime
     // TODO - Link genre buttons to somewhere and style them better
-    // TODO - Mobile first CSS adjustments
 
     return (
         <div className='mainContainer'>
             <div className='titleContainer'>
                 <h1>{movieDetails.title}</h1>
-                <p>{movieDetails.year} | {movieDetails.rated} | {movieDetails.runtime}m</p>
+                <p> 
+                    {movieDetails.year !== undefined && movieDetails.year + ' |'}
+                    {movieDetails.rated !== undefined && ' ' + movieDetails.rated + ' |'}
+                    {movieDetails.runtime !== undefined && ' ' + movieDetails.runtime + 'm'}
+                </p>
             </div>
             <div className='posterContainer'>
                 <img src={movieDetails.poster} className='poster' alt='Movie Poster'></img>
