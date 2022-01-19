@@ -7,7 +7,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import '@popperjs/core'; 
 import 'bootstrap';
 import { BrowserRouter } from 'react-router-dom';
-import 'font-awesome/css/font-awesome.min.css';
 
 ReactDOM.render(
   <BrowserRouter>

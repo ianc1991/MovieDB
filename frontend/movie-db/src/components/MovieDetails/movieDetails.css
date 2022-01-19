@@ -27,6 +27,13 @@
     display: inline;
 }
 
+.ratingAndCardContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 10px;
+}
+
 .genreButton {
     margin: 5px;
 }
@@ -40,34 +47,37 @@ h1, p {
     max-width: 280px;
 }
 
-
-.fullPlot {
-    width: 50%;
-    background: rgba(25, 25, 25, 0.582);
+.cardDetails {
+    min-width: 165px !important;
+    margin-top: 5px;
+    display: flex;
 }
 
+.cardPlot {
+    max-width: 50%;
+    margin-top: 10px;
+}
 
-.card {
-    min-width: 165px !important;
-    margin-top: 15px;
+.fullPlotButton {
+    padding: 3px 6px !important;
 }
 
 @media only screen and (min-width: 800px) {
     .posterContainer {
         justify-content: space-between;
         flex-direction: row;
-    }
-
-    .titleContainer {
-
+        align-items: flex-end;
     }
 
     .mainContainer {
         margin-left: 0;
     }
 
-    .card {
+    .ratingAndCardContainer {
         margin-top: 0;
+    }
+
+    .cardDetails {
         margin-left: 20px;
     }
   }

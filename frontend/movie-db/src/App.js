@@ -1,10 +1,9 @@
 import './App.css';
+import { Route, Routes } from 'react-router-dom';
 // Components
 import Navbar from './components/Navbar';
 import Home from './components/Home/Home'
 import MovieDetails from './components/MovieDetails/MovieDetails';
-
-import { Route, Routes } from 'react-router-dom';
 
 function App() {
   return (
