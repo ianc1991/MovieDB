@@ -1,20 +1,20 @@
 import './App.css';
 import { Route, Routes } from 'react-router-dom';
 // Components
-import Navbar from './components/Navbar';
+import Navbar from './components/Navbar/Navbar';
 import Home from './components/Home/Home'
 import MovieDetails from './components/MovieDetails/MovieDetails';
 
 function App() {
   return (
-    <div className="appC">
-      <header className="headerC">
+    <div>
+      <header>
         <Navbar />
       </header>
-      <Routes>
-        <Route exact path="/" element={<Home />} />
-        <Route path="/moviedetails" element={<MovieDetails />} />
-      </Routes>
+        <Routes>
+          <Route exact path="/" element={<Home />} />
+          <Route path="/moviedetails" element={<MovieDetails />} />
+        </Routes>
     </div>
   );
 }
