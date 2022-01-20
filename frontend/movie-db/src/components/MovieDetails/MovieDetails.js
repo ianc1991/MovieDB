@@ -89,7 +89,7 @@ const MovieDetails = () => {
                 <div className="card-header">
                     Plot
                 </div>
-                <div className="card-body" ref={fullPlotRef}>
+                <div className="card-body">
                         {
                             fullPlotToggled ? 
                                 <p>
