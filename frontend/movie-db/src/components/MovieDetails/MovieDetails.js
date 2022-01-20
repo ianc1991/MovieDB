@@ -1,11 +1,12 @@
 import './movieDetails.css';
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import movieDataSrv from '../../Services/movies';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { faImdb } from '@fortawesome/free-brands-svg-icons';
 
-
+// TODO - Link genre buttons to somewhere and style them better
+// TODO - Autoscroll when fullplot is expanded
 
 const MovieDetails = () => {
     // Get id from URL
@@ -13,34 +14,30 @@ const MovieDetails = () => {
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
     const id = urlParams.get('id');
-
-    // For the full plot button toggle
-    const [fullPlotToggled, setPlotToggle] = useState(false);
-    function toggleFullPlot() {
-        setPlotToggle(!fullPlotToggled);
-        console.log(fullPlotToggled);
-    }
     
-    // useState needs to be initialized with empty nested arrays/objects, else type will be undefined and page will fail to compile
+    // useState needs to be initialized with empty nested arrays/objects that are used, else type will be undefined and page will fail to compile
     const [movieDetails, setMovieDetails] = useState({genres:[], cast:[], directors:[], writers:[], imdb:{}});
+
     useEffect(() => {
         retrieveMovieDetails();
         // The comment below disables missing dependency warning
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
-
-    // Gets movie details by id and sets it to 'movieDetails'
+    
+    // Gets movie details by 'id' and sets it to 'movieDetails'
     const retrieveMovieDetails = () => {
         movieDataSrv.getMovieDetailsById(id)
-            .then(response => {
-                setMovieDetails(response.data);
-            })
-            .catch(e => {
-                console.log('Error at retrieveMovieDetails(): ' + e);
-            });
+        .then(response => {
+            setMovieDetails(response.data);
+        })
+        .catch(e => {
+            console.log('Error at retrieveMovieDetails(): ' + e);
+        });
     };
-
-    // TODO - Link genre buttons to somewhere and style them better
+    
+    // For the full plot button toggle
+    const [fullPlotToggled, setPlotToggle] = useState(false);
+    const toggleFullPlot = () => setPlotToggle(!fullPlotToggled);
 
     return (
         <div className='mainContainer'>
@@ -92,7 +89,7 @@ const MovieDetails = () => {
                 <div className="card-header">
                     Plot
                 </div>
-                <div className="card-body">
+                <div className="card-body" ref={fullPlotRef}>
                         {
                             fullPlotToggled ? 
                                 <p>
