@@ -6,8 +6,14 @@ class MovieDataService {
         return http.get('/');
     }
 
+    // Get by Id
     getMovieDetailsById(id) {
         return http.get(`/${id}`)
+    }
+
+    // Gey by search text
+    getMoviesBySearchText(searchText) {
+        return http.get(`/allmovies/${searchText}`)
     }
 }
 

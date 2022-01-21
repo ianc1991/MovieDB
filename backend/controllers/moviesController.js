@@ -4,9 +4,16 @@ const Movies = require("../models/Movies");
 
 // All movies
 const getAllMovies = async (req, res) => {
-    allMovies = await Movies.find();
+    const allMovies = await Movies.find();
     if (!allMovies) return res.status(204).json({'message': 'No movies found.'});
     return res.json(allMovies);
+}
+
+// Movie by search
+const getMovieBySearchText = async (req, res) => {
+    const searchedMovies = await Movies.find({ title: req.params.searchText });
+    if (!searchedMovies) return res.status(204).json({'message': 'No movie found.'});
+    res.json(searchedMovies);
 }
 
 // Movie by Id
@@ -26,7 +33,8 @@ const newMovies = async (req, res) => {
 module.exports = {
     getAllMovies,
     getMovieById,
-    newMovies
+    newMovies,
+    getMovieBySearchText
 }
 
 

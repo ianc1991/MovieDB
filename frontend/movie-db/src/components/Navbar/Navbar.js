@@ -1,4 +1,15 @@
-const Navbar = () => {
+import { useState } from 'react';
+
+
+const Navbar = (props) => {
+
+    // For searches
+    const [text, setText] = useState('');
+    const handleSearchText = e => {
+        console.log('Running handleSearchText() with text: ' + text);
+        setText(e.target.value);
+    }
+
     return (
             <nav className="navbar navbar-expand-md navbar-dark bg-dark">
                 <div className="container-fluid">
@@ -25,10 +36,16 @@ const Navbar = () => {
                                 <a className="nav-link" aria-current="page" href="/">Login</a>
                             </li>
                         </ul>
-                        <form className="d-flex">
-                            <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
-                            <button className="btn btn-outline-success" type="submit">Search</button>
-                        </form>
+                        <span className="d-flex">
+                            <input 
+                                className="form-control me-2" 
+                                type="search" 
+                                placeholder="Search" 
+                                aria-label="Search"
+                                onChange={handleSearchText}
+                            />
+                            <button className="btn btn-outline-success"onClick={() => props.passText(text)}>Search</button>
+                        </span>
                     </div>
                 </div>
             </nav>
