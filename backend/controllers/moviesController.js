@@ -1,7 +1,5 @@
 const Movies = require("../models/Movies");
 
-
-
 // All movies
 const getAllMovies = async (req, res) => {
     const allMovies = await Movies.find();
@@ -11,7 +9,7 @@ const getAllMovies = async (req, res) => {
 
 // Movie by search
 const getMovieBySearchText = async (req, res) => {
-    const searchedMovies = await Movies.find({ title: req.params.searchText });
+    const searchedMovies = await Movies.find({ $text: { $search: req.params.searchtext } }).limit(10);
     if (!searchedMovies) return res.status(204).json({'message': 'No movie found.'});
     res.json(searchedMovies);
 }

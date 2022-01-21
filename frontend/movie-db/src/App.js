@@ -5,9 +5,10 @@ import { useState } from 'react';
 import Navbar from './components/Navbar/Navbar';
 import Home from './components/Home/Home'
 import MovieDetails from './components/MovieDetails/MovieDetails';
+import MovieList from './components/MovieList/MovieList';
 
 function App() {
-  const [searchText, setSearchText] = useState('');
+  const [searchText, setSearchText] = useState(null);
 
   return (
     <div>
@@ -17,8 +18,8 @@ function App() {
         <Routes>
           <Route exact path="/" element={<Home />} />
           <Route path="/moviedetails" element={<MovieDetails />} />
+          <Route path="/movielist" element={<MovieList searchText={searchText}/>} />
         </Routes>
-        <button onClick={()=>console.log(searchText)}>SHOW SEARCH STATE</button>
     </div>
   );
 }

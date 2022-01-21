@@ -1,12 +1,13 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 
 const Navbar = (props) => {
-
+    
+    const navigate = useNavigate();
     // For searches
-    const [text, setText] = useState('');
+    const [text, setText] = useState(null);
     const handleSearchText = e => {
-        console.log('Running handleSearchText() with text: ' + text);
         setText(e.target.value);
     }
 
@@ -44,7 +45,11 @@ const Navbar = (props) => {
                                 aria-label="Search"
                                 onChange={handleSearchText}
                             />
-                            <button className="btn btn-outline-success"onClick={() => props.passText(text)}>Search</button>
+                            <button className="btn btn-outline-success" 
+                                onClick={() => {props.passText(text); navigate('/movielist')}}
+                                >
+                                    Search
+                                </button>
                         </span>
                     </div>
                 </div>

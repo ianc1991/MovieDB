@@ -8,7 +8,7 @@ const moviesCtrl = require("../../controllers/moviesController")
 router.route('/allmovies').get(moviesCtrl.getAllMovies);
 
 // Search all movies
-router.route('allmovies/:searchText').get(moviesCtrl.getMovieBySearchText);
+router.route('/allmovies/:searchtext').get(moviesCtrl.getMovieBySearchText);
 
 // New Movies
 router.route('/').get(moviesCtrl.newMovies);
