@@ -2,7 +2,7 @@ import './movieList.css'
 import { useState, useEffect } from "react";
 import movieDataSrv from '../../Services/movies';
 
-// TODO - CSS on direct elements like 'img' was affecting home page css???? 
+ 
 
 const MovieList = ({searchText}) => {
     const [movieList, setMovieList] = useState([]);

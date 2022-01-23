@@ -7,6 +7,9 @@ import Home from './components/Home/Home'
 import MovieDetails from './components/MovieDetails/MovieDetails';
 import MovieList from './components/MovieList/MovieList';
 
+// TODO - CSS on repeat elements/classes affecting all elements and classes.
+//        Need to install CSS Modules or something similar.
+
 function App() {
   const [searchText, setSearchText] = useState(null);
 
