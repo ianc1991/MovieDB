@@ -9,7 +9,8 @@ const getAllMovies = async (req, res) => {
 
 // Movie by search
 const getMovieBySearchText = async (req, res) => {
-    const searchedMovies = await Movies.find({ $text: { $search: req.params.searchtext } }).limit(10);
+    const searchText = req.params.searchtext
+    const searchedMovies = await Movies.find({ $text: { $search: searchText } }).limit(10).sort({ score: { $meta: "textScore" } });
     if (!searchedMovies) return res.status(204).json({'message': 'No movie found.'});
     res.json(searchedMovies);
 }
