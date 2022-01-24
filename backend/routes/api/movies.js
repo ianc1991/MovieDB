@@ -4,8 +4,8 @@ const Movies = require("../../models/Movies");
 const moviesCtrl = require("../../controllers/moviesController")
 
 
-// Get all movies
-router.route('/allmovies').get(moviesCtrl.getAllMovies);
+// Get all movies - disabled to prevent overflow
+//router.route('/allmovies').get(moviesCtrl.getAllMovies);
 
 // Search all movies
 router.route('/allmovies/:searchtext').get(moviesCtrl.getMovieBySearchText);

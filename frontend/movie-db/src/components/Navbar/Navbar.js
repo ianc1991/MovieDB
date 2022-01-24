@@ -11,6 +11,10 @@ const Navbar = (props) => {
         setText(e.target.value);
     }
 
+    const handleSearchSubmit = () => {
+        navigate('/movielist')
+    }
+
     return (
             <nav className="navbar navbar-expand-md navbar-dark bg-dark">
                 <div className="container-fluid">
@@ -37,20 +41,25 @@ const Navbar = (props) => {
                                 <a className="nav-link" aria-current="page" href="/">Login</a>
                             </li>
                         </ul>
-                        <span className="d-flex">
+                        <form className="d-flex" 
+                            onSubmit={handleSearchSubmit} 
+                        >
                             <input 
                                 className="form-control me-2" 
                                 type="search" 
+                                required
                                 placeholder="Search" 
                                 aria-label="Search"
                                 onChange={handleSearchText}
+                                name='s'
                             />
-                            <button className="btn btn-outline-success" 
-                                onClick={() => {props.passText(text); navigate('/movielist')}}
-                                >
-                                    Search
-                                </button>
-                        </span>
+                            <button 
+                                className="btn btn-outline-success"
+                                type='submit'
+                            >
+                                Search
+                            </button>
+                        </form>
                     </div>
                 </div>
             </nav>

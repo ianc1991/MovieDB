@@ -1,15 +1,21 @@
 .mainContainer {
     margin-left: 0;
-display: flex;
+    display: flex;
 }
 
 .imageTitleContainer {
     display: flex;
+    align-items: center;
+    gap: 5px;
+    height: 100px;
 }
-
 .moviePoster {
     max-height: 100px;
     max-width: 100px;
+}
+
+.movieListTableRow:hover {
+    cursor: pointer;
 }
 
 

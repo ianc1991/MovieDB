@@ -1,18 +1,25 @@
 import './movieList.css'
 import { useState, useEffect } from "react";
 import movieDataSrv from '../../Services/movies';
+import { useNavigate } from 'react-router-dom';
+import noImageAvailablePicture from '../../assets/noImage.png'
 
  
 
 const MovieList = ({searchText}) => {
+    // Get search parameter from url
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const searchParam = urlParams.get('s');
+
     const [movieList, setMovieList] = useState([]);
+    const navigate = useNavigate();
 
     // Get movie list and set it to 'movieList' state.
     useEffect(() => {
-        // If there is search text
         const retrieveMovieListBySearch = () => {
             console.log('retrieveMovieListBySearch() running')
-            movieDataSrv.getMoviesBySearchText(searchText)
+            movieDataSrv.getMoviesBySearchText(searchParam)
                 .then(response => {
                     setMovieList(response.data);
                     console.log('Search complete');
@@ -22,15 +29,34 @@ const MovieList = ({searchText}) => {
                 });
         }
 
-        if(searchText != null){
+        const retrieveNewMovies = () => {
+            movieDataSrv.getNew()
+                .then(response => {
+                    setMovieList(response.data);
+                })
+                .catch(e => {
+                    console.log(e);
+                });
+        }
+        
+        if(searchParam != null){
+            console.log('searching with ' + searchParam)
             retrieveMovieListBySearch();
+        } else {
+            console.log('no search param')
+            retrieveNewMovies();
         }
             
-    }, [searchText]); // Dependency array. useEffect() will run when 'searchText' changes.
+    }, [searchParam]); // Dependency array. useEffect() will run when variable changes.
+
+    // If image 404
+    const handleImgError = e => {
+        e.target.src = noImageAvailablePicture
+    }
 
   return (
     <div className='mainContainer'>
-        <table className="table table-dark table-striped table-hover">
+        <table className="table movieListTable table-dark table-striped table-hover">
             <thead>
                 <tr>
                 <th scope="col">#</th>
@@ -39,14 +65,14 @@ const MovieList = ({searchText}) => {
                 <th scope="col">Media Type</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody className='movieListTableBody'>
                 {
                     movieList.map((movie, i) => (
-                        <tr key={i}>
-                        <th scope="row">{i + 1}</th>
-                        <td><div className='imageTitleContainer'><img className='moviePoster' src={movie.poster} alt='Movie Poster'></img> {movie.title}</div></td>
-                        <td>{movie.year}</td>
-                        <td>{movie.type}</td>
+                        <tr className='movieListTableRow' key={i} onClick={() => navigate(`/moviedetails?id=${movie._id}`)}>
+                            <th scope="row">{i + 1}</th>
+                            <td><div className='imageTitleContainer'><img className='moviePoster' src={movie.poster} onError={handleImgError} alt='Movie Poster'></img> {movie.title}</div></td>
+                            <td><div className='imageTitleContainer'>{movie.year}</div></td>
+                            <td><div className='imageTitleContainer'>{movie.type}</div></td>
                         </tr>
                     ))
                 }

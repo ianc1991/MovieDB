@@ -4,13 +4,13 @@ import movieDataSrv from '../../Services/movies';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { faImdb } from '@fortawesome/free-brands-svg-icons';
+import noImageAvailablePicture from '../../assets/noImage.png';
 
 // TODO - Link genre buttons to somewhere and style them better
 // TODO - Autoscroll when fullplot is expanded
 
 const MovieDetails = () => {
     // Get id from URL
-    // TODO - Axios should have a way to do this
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
     const id = urlParams.get('id');
@@ -34,6 +34,11 @@ const MovieDetails = () => {
             console.log('Error at retrieveMovieDetails(): ' + e);
         });
     };
+
+    // If image 404
+    const handleImgError = e => {
+        e.target.src = noImageAvailablePicture
+    }
     
     // For the full plot button toggle
     const [fullPlotToggled, setPlotToggle] = useState(false);
@@ -50,7 +55,7 @@ const MovieDetails = () => {
                 </p>
             </div>
             <div className='posterContainer'>
-                <img src={movieDetails.poster} className='poster' alt='Movie Poster'></img>
+                <img src={movieDetails.poster} className='poster' onError={handleImgError} alt='Movie Poster'></img>
                 <div className='ratingAndCardContainer'>
                     <FontAwesomeIcon icon={faImdb} inverse className='fa-5x' />
                     <p><FontAwesomeIcon icon={faStar} inverse /> {movieDetails.imdb.rating}/10 • {movieDetails.imdb.votes} votes</p>
