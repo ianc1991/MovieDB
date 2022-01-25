@@ -55,7 +55,7 @@ const MovieDetails = () => {
                 </p>
             </div>
             <div className='posterContainer'>
-                <img src={movieDetails.poster} className='poster' onError={handleImgError} alt='Movie Poster'></img>
+                <img src={movieDetails.poster || noImageAvailablePicture} className='poster' onError={handleImgError} alt='Movie Poster'></img>
                 <div className='ratingAndCardContainer'>
                     <FontAwesomeIcon icon={faImdb} inverse className='fa-5x' />
                     <p><FontAwesomeIcon icon={faStar} inverse /> {movieDetails.imdb.rating}/10 • {movieDetails.imdb.votes} votes</p>

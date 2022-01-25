@@ -5,7 +5,6 @@ const bodyParser = require("body-parser");
 const logger = require("morgan");
 const moviesRouter = require("./routes/api/movies");
 const Mongoose  = require("mongoose");
-const moviesCtrl = require("./controllers/moviesController");
 
 const app = express();
 const PORT = process.env.PORT || 4000;
@@ -19,7 +18,7 @@ app.use(cors());
 // Morgan logger
 app.use(logger('dev'));
 
-// TODO - uninstall body parser or read
+// TODO - Read about body parser
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 

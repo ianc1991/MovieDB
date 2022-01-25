@@ -1,11 +1,11 @@
 const express = require ("express");
 const router = express.Router();
 const Movies = require("../../models/Movies");
-const moviesCtrl = require("../../controllers/moviesController")
+const moviesCtrl = require("../../controllers/moviesController");
 
 
-// Get all movies - disabled to prevent overflow
-//router.route('/allmovies').get(moviesCtrl.getAllMovies);
+// Used for searching all movies - defaults to prevent crashing server when /:searchtext is empty 
+router.route('/allmovies').get(moviesCtrl.newMovies);
 
 // Search all movies
 router.route('/allmovies/:searchtext').get(moviesCtrl.getMovieBySearchText);

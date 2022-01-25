@@ -1,13 +1,25 @@
 const Movies = require("../models/Movies");
+const { body, validationResult } = require('express-validator')
+
 
 // All movies
 const getAllMovies = async (req, res) => {
-    const allMovies = await Movies.find();
+    const allMovies = await Movies.find().limit(10);
     if (!allMovies) return res.status(204).json({'message': 'No movies found.'});
     return res.json(allMovies);
 }
 
 // Movie by search
+exports.validate = (method) => {
+    switch (method) {
+        case 'getMovieBySearchText': {
+            return [
+                body('req.params.searchtext', 'no search text found').trim() > 0,
+            ]
+        }
+    }
+}
+
 const getMovieBySearchText = async (req, res) => {
     const searchText = req.params.searchtext;
     const searchedMovies = await Movies.find({ $text: { $search: searchText } }).limit(10).sort({ score: { $meta: "textScore" } });
