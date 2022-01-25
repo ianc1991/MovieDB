@@ -25,14 +25,17 @@ const MovieList = () => {
     setIsLoading(false);
     }
 
+    useEffect(()=>{
+        window.addEventListener("load",handleLoading);
+        return () => window.removeEventListener("load",handleLoading);
+        },[])
+
     // Get movie list and set it to 'movieList' state.
     useEffect(() => {
-        window.addEventListener("load", handleLoading);
         const retrieveMovieListBySearch = () => {
             movieDataSrv.getMoviesBySearchText(searchParam)
                 .then(response => {
                     setMovieList(response.data);
-                    return () => window.removeEventListener("load", handleLoading);
                 })
                 .catch(e => {
                     console.log(e);
@@ -43,7 +46,6 @@ const MovieList = () => {
             movieDataSrv.getNew()
                 .then(response => {
                     setMovieList(response.data);
-                    return () => window.removeEventListener("load", handleLoading);
                 })
                 .catch(e => {
                     console.log(e);
@@ -56,7 +58,7 @@ const MovieList = () => {
             retrieveNewMovies();
         }
             
-    }, [searchParam, isLoading]); // Dependency array. useEffect() will run when variable changes.
+    }, [searchParam]); // Dependency array. useEffect() will run when variable changes.
 
     // If image 404
     const handleImgError = e => {
