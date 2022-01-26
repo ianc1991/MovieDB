@@ -1,9 +1,14 @@
 import './movieDetails.css';
 import { useState, useEffect, useRef } from "react";
 import movieDataSrv from '../../Services/movies';
+//Promise Tracker
+import { usePromiseTracker } from 'react-promise-tracker';
+import { trackPromise } from 'react-promise-tracker';
+// FontAwesome
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { faImdb } from '@fortawesome/free-brands-svg-icons';
+// Assets
 import noImageAvailablePicture from '../../assets/noImage.png';
 
 // TODO - Link genre buttons to somewhere and style them better
@@ -14,7 +19,10 @@ const MovieDetails = () => {
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
     const id = urlParams.get('id');
-    
+
+    // Promise tracker
+    const { promiseInProgress } = usePromiseTracker();
+
     // useState needs to be initialized with empty nested arrays/objects that are used, else type will be undefined and page will fail to compile
     const [movieDetails, setMovieDetails] = useState({genres:[], cast:[], directors:[], writers:[], imdb:{}});
 
@@ -26,13 +34,14 @@ const MovieDetails = () => {
     
     // Gets movie details by 'id' and sets it to 'movieDetails'
     const retrieveMovieDetails = () => {
-        movieDataSrv.getMovieDetailsById(id)
-        .then(response => {
-            setMovieDetails(response.data);
-        })
-        .catch(e => {
-            console.log('Error at retrieveMovieDetails(): ' + e);
-        });
+        trackPromise(
+            movieDataSrv.getMovieDetailsById(id)
+                .then(response => {
+                    setMovieDetails(response.data);
+                })
+                .catch(e => {
+                    console.log('Error at retrieveMovieDetails(): ' + e);
+            }))
     };
 
     // If image 404
@@ -43,6 +52,10 @@ const MovieDetails = () => {
     // For the full plot button toggle
     const [fullPlotToggled, setPlotToggle] = useState(false);
     const toggleFullPlot = () => setPlotToggle(!fullPlotToggled);
+
+    if(promiseInProgress) {
+        return <></>
+    }
 
     return (
         <div className='mainContainer'>

@@ -1,14 +1,16 @@
-import './movieList.css'
+import './movieList.css';
 import { useState, useEffect } from "react";
 import movieDataSrv from '../../Services/movies';
 import { useNavigate } from 'react-router-dom';
+import { trackPromise } from 'react-promise-tracker';
 //Assets
 import noImageAvailablePicture from '../../assets/noImage.png';
 import nothingFoundImage from '../../assets/noResultFound.webp';
-// Components
-import Loading from '../Loading/Loading';
+// FontAwesome
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faStar } from '@fortawesome/free-solid-svg-icons';
 
- 
+ // TODO - Use nothingFoundImage if no results are found for list
 
 const MovieList = () => {
     // Get search parameter from url
@@ -16,30 +18,22 @@ const MovieList = () => {
     const urlParams = new URLSearchParams(queryString);
     const searchParam = urlParams.get('s');
 
-    const [movieList, setMovieList] = useState([]);
     const navigate = useNavigate();
-
-    const [isLoading, setIsLoading] = useState(true);
-
-    const handleLoading = () => {
-    setIsLoading(false);
-    }
-
-    useEffect(()=>{
-        window.addEventListener("load",handleLoading);
-        return () => window.removeEventListener("load",handleLoading);
-        },[])
+    
+    const [movieList, setMovieList] = useState([]);
 
     // Get movie list and set it to 'movieList' state.
     useEffect(() => {
         const retrieveMovieListBySearch = () => {
-            movieDataSrv.getMoviesBySearchText(searchParam)
-                .then(response => {
-                    setMovieList(response.data);
-                })
-                .catch(e => {
-                    console.log(e);
-                });
+            trackPromise(
+                movieDataSrv.getMoviesBySearchText(searchParam)
+                    .then(response => {
+                        setMovieList(response.data);
+                    })
+                    .catch(e => {
+                        console.log(e);
+                    })
+            )
         }
 
         const retrieveNewMovies = () => {
@@ -65,34 +59,37 @@ const MovieList = () => {
         e.target.src = noImageAvailablePicture
     }
 
-    if(isLoading) {
-        return <Loading />
-    }
-
   return (
-    <div className='mainContainer'>
-            <table className="table movieListTable table-dark table-striped table-hover">
-                <thead>
-                    <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Title</th>
-                    <th scope="col">Release Year</th>
-                    <th scope="col">Media Type</th>
-                    </tr>
-                </thead>
-                <tbody className='movieListTableBody'>
-                    {
-                        movieList.map((movie, i) => (
-                            <tr className='movieListTableRow' key={i} onClick={() => navigate(`/moviedetails?id=${movie._id}`)}>
-                                <th scope="row">{i + 1}</th>
-                                <td><div className='imageTitleContainer'><img className='moviePoster' src={movie.poster || noImageAvailablePicture} onError={handleImgError} alt='Movie Poster'></img> {movie.title}</div></td>
-                                <td><div className='imageTitleContainer'>{movie.year}</div></td>
-                                <td><div className='imageTitleContainer'>{movie.type}</div></td>
-                            </tr>
-                        ))
-                    }
-                </tbody>
-            </table>
+    <div className='mainMovieListContainer'>
+        <div className='filterContainer'>
+
+        </div>
+        <table className="table movieListTable table-dark table-striped table-hover">
+            <thead>
+                <tr>
+                <th scope="col">#</th>
+                <th scope="col">Title</th>
+                <th scope="col">IMDb Rating</th>
+                <th scope="col">Release Year</th>
+                <th scope="col">Media Type</th>
+                </tr>
+            </thead>
+            <tbody className='movieListTableBody'>
+                {
+                    movieList.map((movie, i) => (
+                        <tr className='movieListTableRow' key={i} onClick={() => navigate(`/moviedetails?id=${movie._id}`)}>
+                            <th scope="row">{i + 1}</th>
+                            <td><div className='imageTitleContainer'><img className='moviePoster' src={movie.poster || noImageAvailablePicture} onError={handleImgError} alt='Movie Poster'></img> {movie.title}</div></td>
+                            <td><div className='imageTitleContainer'>
+                                <p><FontAwesomeIcon icon={faStar} inverse /> {movie.imdb.rating}</p></div>
+                            </td>
+                            <td><div className='imageTitleContainer'>{movie.year}</div></td>
+                            <td><div className='imageTitleContainer'>{movie.type}</div></td>
+                        </tr>
+                    ))
+                }
+            </tbody>
+        </table>
     </div>
     )
 }

@@ -1,6 +1,6 @@
-.mainContainer {
-    margin-left: 0;
+.mainMovieListContainer {
     display: flex;
+    justify-content: center;
 }
 
 .imageTitleContainer {
@@ -9,19 +9,25 @@
     gap: 5px;
     height: 100px;
 }
+
+.imageTitleContainer p {
+    margin: 0;
+}
 .moviePoster {
     max-height: 100px;
     max-width: 100px;
+}
+.movieListTable {
+    font-size: 12px;
 }
 
 .movieListTableRow:hover {
     cursor: pointer;
 }
 
-
-
 @media only screen and (min-width: 800px) {
-    .table {
-        max-width: 80%;
+    .movieListTable {
+        font-size: 16px;
+        max-width: 900px;
     }
 }

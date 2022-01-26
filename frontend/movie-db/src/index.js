@@ -7,10 +7,21 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import '@popperjs/core'; 
 import 'bootstrap';
 import { BrowserRouter } from 'react-router-dom';
+import Loading from './components/Loading/Loading'
+import { usePromiseTracker } from "react-promise-tracker";
+
+const LoadingIndicator = props => {
+    const { promiseInProgress } = usePromiseTracker();
+    return (
+      promiseInProgress && 
+      <Loading />
+    );  
+}
 
 ReactDOM.render(
   <BrowserRouter>
     <App />
+    <LoadingIndicator />
   </BrowserRouter>,
   document.getElementById('root')
 );
