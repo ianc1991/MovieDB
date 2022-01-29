@@ -37,13 +37,15 @@ const MovieList = () => {
         }
 
         const retrieveNewMovies = () => {
-            movieDataSrv.getNew()
-                .then(response => {
-                    setMovieList(response.data);
-                })
-                .catch(e => {
-                    console.log(e);
-                });
+            trackPromise(
+                movieDataSrv.getNew()
+                    .then(response => {
+                        setMovieList(response.data);
+                    })
+                    .catch(e => {
+                        console.log(e);
+                    })
+            )
         }
         
         if(searchParam != null){
@@ -54,10 +56,44 @@ const MovieList = () => {
             
     }, [searchParam]); // Dependency array. useEffect() will run when variable changes.
 
+
+
     // If image 404
     const handleImgError = e => {
         e.target.src = noImageAvailablePicture
     }
+
+    // T0DO - Finish this
+    // View More button
+    const [viewMoreClicked, setViewMoreClicked] = useState(false);
+
+    const handleViewMoreButton = () => {
+        setViewMoreClicked(true)
+    }
+
+    useEffect(() => {
+        if (viewMoreClicked) {
+            let lastItem = movieList[movieList.length - 1];
+            const retrieveNextPage = () => {
+                trackPromise(
+                    movieDataSrv.getNextPage(lastItem._id)
+                        .then(response => {
+                            setMovieList(response.data);
+                        })
+                        .catch(e => {
+                            console.log(e);
+                        })
+                )
+            }
+
+            retrieveNextPage();
+            setViewMoreClicked(false);
+        }
+        // TODO - movieList becomes missing dependency if not included? 
+    },[viewMoreClicked, movieList]);
+
+    // END OF VIEW MORE BUTTON
+
 
   return (
     <div className='mainMovieListContainer'>
