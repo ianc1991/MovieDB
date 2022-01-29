@@ -20,6 +20,10 @@ class MovieDataService {
     getMoviesBySearchText(searchText) {
         return http.get(`/allmovies/${searchText}`)
     }
+
+    getNextPage(lastItem) {
+        return http.get(`/nextpage/${lastItem}`)
+    }
 }
 
 export default new MovieDataService();

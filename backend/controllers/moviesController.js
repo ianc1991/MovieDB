@@ -1,5 +1,5 @@
 const Movies = require("../models/Movies");
-const { body, validationResult } = require('express-validator')
+//const { body, validationResult } = require('express-validator')
 
 
 // All movies
@@ -10,15 +10,15 @@ const getAllMovies = async (req, res) => {
 }
 
 // Movie by search
-exports.validate = (method) => {
-    switch (method) {
-        case 'getMovieBySearchText': {
-            return [
-                body('req.params.searchtext', 'no search text found').trim() > 0,
-            ]
-        }
-    }
-}
+// exports.validate = (method) => {
+//     switch (method) {
+//         case 'getMovieBySearchText': {
+//             return [
+//                 body('req.params.searchtext', 'no search text found').trim() > 0,
+//             ]
+//         }
+//     }
+// }
 
 const getMovieBySearchText = async (req, res) => {
     const searchText = req.params.searchtext;
@@ -40,12 +40,17 @@ const newMovies = async (req, res) => {
     res.json(sortedMoviesByDate);
 }
 
+const nextPage = async (req, res) => {
+    console.log(req.params.id);
+}
+
 
 module.exports = {
     getAllMovies,
     getMovieById,
     newMovies,
-    getMovieBySearchText
+    getMovieBySearchText,
+    nextPage
 }
 
 

@@ -16,4 +16,7 @@ router.route('/').get(moviesCtrl.newMovies);
 // Get movie by id
 router.route('/:id').get(moviesCtrl.getMovieById);
 
+// Get next page of itmes
+router.route('/nextpage/:id').get(moviesCtrl.nextPage);
+
 module.exports = router;
