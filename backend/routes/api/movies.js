@@ -1,8 +1,6 @@
 const express = require ("express");
 const router = express.Router();
-const Movies = require("../../models/Movies");
 const moviesCtrl = require("../../controllers/moviesController");
-
 
 // Used for searching all movies - defaults to prevent crashing server when /:searchtext is empty 
 router.route('/allmovies').get(moviesCtrl.newMovies);
@@ -18,5 +16,7 @@ router.route('/:id').get(moviesCtrl.getMovieById);
 
 // Get next page of itmes
 router.route('/nextpage/:id').get(moviesCtrl.nextPage);
+
+
 
 module.exports = router;

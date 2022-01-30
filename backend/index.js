@@ -1,10 +1,10 @@
 const express = require("express");
-const connectDB = require("./config/db")
+const connectDB = require("./config/db");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const logger = require("morgan");
 const moviesRouter = require("./routes/api/movies");
-const Mongoose  = require("mongoose");
+const Mongoose = require("mongoose");
 
 const app = express();
 const PORT = process.env.PORT || 4000;
