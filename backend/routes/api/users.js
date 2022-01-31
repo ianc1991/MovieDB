@@ -6,7 +6,7 @@ const usersCtrl = require("../../controllers/usersController");
 router.route('/userlist').get(usersCtrl.getUsers);
 
 // Login
-//router.route('/login').post(moviesCtrl.postLogin);
+//router.route('/login').post(usersCtrl.postLogin);
 
 // Create account
 

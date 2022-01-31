@@ -1,0 +1,13 @@
+.loginScreenContainer {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.loginFormContainer {
+    width: 30%;
+}
+
+.formContainer input {
+    display: block;
+}

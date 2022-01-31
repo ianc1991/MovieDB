@@ -6,6 +6,10 @@ const getUsers = async (req, res) => {
     return res.json(users);
 }
 
+// const postLogin = async (req, res) => {
+//     //stuff
+// }
+
 module.exports = {
     getUsers,
 }
