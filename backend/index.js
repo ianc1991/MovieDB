@@ -18,7 +18,7 @@ app.use(cors());
 // Morgan logger
 app.use(logger('dev'));
 
-// TODO - Read about body parser
+// TODO - Uninstall bodyparser and replace with app.use(express.json())
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 

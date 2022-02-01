@@ -1,16 +1,14 @@
 import http from './httpAuth';
 
 class AuthService {
-    login(email, password) {
-        return http.post('/login', {
+    async login(email, password) {
+        const response = await http.post('/login', {
             email,
             password
-        })
-        .then(response => {
-            if(response.data.accessToken) {
-                localStorage.setItem('user', JSON.stringify(response.data));
-            }
-        })
+        });
+        if (response.data.accessToken) {
+            localStorage.setItem('user', JSON.stringify(response.data));
+        }
     }
 
     logout() {

@@ -5,10 +5,10 @@ const usersCtrl = require("../../controllers/usersController");
 // Get list of users (for testing)
 router.route('/userlist').get(usersCtrl.getUsers);
 
-// Login
-//router.route('/login').post(usersCtrl.postLogin);
+// Register user
+router.route('/login').post(usersCtrl.postRegister);
 
-// Create account
-
+// Authorize user
+router.route('/auth').post(usersCtrl.authUser)
 
 module.exports = router;

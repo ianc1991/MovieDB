@@ -12,7 +12,7 @@ connectDB();
 
 app.use(express.json());
 
-app.use("/users", usersRouter);
+app.use("/users/api", usersRouter);
 
 // Notify of connection and only then listen on PORT
 Mongoose.connection.once('open', () => {

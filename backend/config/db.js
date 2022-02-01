@@ -4,7 +4,7 @@ const db = config.get('mongoURI');
 
 const connectDB = async () => {
     try {
-        await mongoose.connect(db,
+        mongoose.connect(db,
             {
                 wtimeoutMS: 5000,
                 useNewUrlParser: true,

@@ -1,8 +1,5 @@
 import './login.css'
-import Form from "react-validation/build/form";
-import Input from "react-validation/build/input";
-import CheckButton from "react-validation/build/button";
-import AuthService from "../services/auth.service";
+import AuthService from "../../Services/Users/auth";
 import React from 'react';
 
 const required = value => {
@@ -23,7 +20,7 @@ class Login extends React.Component {
     this.onChangePassword = this.onChangePassword.bind(this);
 
     this.state = {
-      username: "",
+      email: "",
       password: "",
       loading: false,
       message: ""
@@ -32,7 +29,7 @@ class Login extends React.Component {
 
   onChangeEmail(e) {
     this.setState({
-      username: e.target.value
+      email: e.target.value
     });
   }
 
@@ -79,14 +76,44 @@ class Login extends React.Component {
     }
   }
 
-    render() {(
+    render() { return (
       <div className='loginScreenContainer'>
         <div className='loginFormContainer bg-dark'>
           <h1>Login</h1>
-          <form className='formContainer'>
-            <input type='text' placeholder="User name" required />
-            <input type='password' placeholder="Password" required />
-            <input type='submit' value='Login' className="btn btn-outline-success" />
+          <form 
+            className='formContainer' 
+            onSubmit={this.handleLogin}
+          >
+            <input 
+              type='text'
+              placeholder="Email"
+              value={this.state.email}
+              onChange={this.onChangeEmail}
+              required
+            />
+            <input 
+              type='password' 
+              placeholder="Password" 
+              value={this.state.password}
+              onChange={this.onChangePassword}
+              required
+            />
+            <input 
+              type='submit'
+              value='Login' 
+              className="btn btn-outline-success"
+              disabled={this.state.loading}
+            />
+              {this.state.loading && (
+                  <span className="spinner-border spinner-border-sm"></span>
+                )}
+            {this.state.message && (
+              <div className="form-group">
+                <div className="alert alert-danger" role="alert">
+                  {this.state.message}
+                </div>
+              </div>
+            )}
           </form>
         </div>
       </div>
