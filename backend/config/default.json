@@ -1,4 +1,0 @@
-{
-    "mongoURI": "mongodb+srv://ian:C3zCZM0Y4vGt@cluster0.k4yms.mongodb.net/sample_mflix?authSource=admin&replicaSet=atlas-hwjmk0-shard-0&w=majority&readPreference=primary&appname=mongodb-vscode%200.7.0&retryWrites=true&ssl=true",
-    "jwtSecret": "jwtSecret"
-}
