@@ -10,7 +10,7 @@ const getUsers = async (req, res) => {
     return res.json(users);
 }
 
-//Authorize user
+// Authorize user
 const authUser = async (req, res) => {
     const { email, password } = req.body;
 
@@ -55,7 +55,7 @@ const postRegister = async (req, res) => {
     const { name, email, password } = req.body;
 
     // Simple validation
-    if(!email || !password) {
+    if(!email || !password || !name) {
         return res.status(400).json({ msg: 'Please enter all fields' });
     }
 
