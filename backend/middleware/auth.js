@@ -2,7 +2,8 @@ const config = require('config');
 const jwt = require('jsonwebtoken');
 
 function auth(req, res, next) {
-    const token = req.header('x-auth-token');
+    //const token = req.header('x-auth-token');
+    console.log(req.cookie)
 
     // Check for token
     if(!token) res.status(401).json({ msg: 'No token, auth denied'}); // 401 = unauthrized
@@ -14,7 +15,8 @@ function auth(req, res, next) {
         req.user = decoded;
         next();
     } catch(e) {
-        res.status(400).json({ msg: 'Token is not valid' });
+        console.error(err);
+        res.status(401).json({ msg: 'Unauthorized' });
     }
     
 }
