@@ -6,9 +6,12 @@ const usersCtrl = require("../../controllers/usersController");
 router.route('/userlist').get(usersCtrl.getUsers);
 
 // Register user
-router.route('/login').post(usersCtrl.postRegister);
+router.route('/register').post(usersCtrl.postRegister);
 
-// Authorize user
-router.route('/auth').post(usersCtrl.authUser)
+// Authorize user for login
+router.route('/auth').post(usersCtrl.authUser);
+
+// Log out
+router.route('/logout').get(usersCtrl.logout);
 
 module.exports = router;

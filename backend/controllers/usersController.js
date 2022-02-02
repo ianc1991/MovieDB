@@ -10,7 +10,7 @@ const getUsers = async (req, res) => {
     return res.json(users);
 }
 
-// Authorize user
+// Authorize user for login
 const authUser = async (req, res) => {
     const { email, password } = req.body;
 
@@ -20,7 +20,7 @@ const authUser = async (req, res) => {
     }
 
     // Check for existing user
-    User.findOne({ email }) // Since varibale matches database name, only need to state it once as opposed to 'email: 'email''
+    User.findOne({ email }) // Since varibale matches database field name, only need to state it once as opposed to 'email: email'
         .then(user => {
             if(!user) return res.status(400).json({ msg: 'User does not exist' });
 
@@ -36,13 +36,10 @@ const authUser = async (req, res) => {
                         // Callback
                         (err, token) => {
                             if(err) throw err;
-                            res.json({
-                                token, // same as 'token: token'
-                                user: {
-                                    id: user.id,
-                                    email: user.email
-                                }
-                            });
+                            res.cookie("token", token, {
+                                httpOnly: true
+                            })
+                            .send();
                         }
                     )
                 })
@@ -84,13 +81,10 @@ const postRegister = async (req, res) => {
                                 // Callback
                                 (err, token) => {
                                     if(err) throw err;
-                                    res.json({
-                                        token, // same as 'token: token'
-                                        user: {
-                                            id: user.id,
-                                            email: user.email
-                                        }
-                                    });
+                                    res.cookie("token", token, {
+                                        httpOnly: true
+                                    })
+                                    .send();
                                 }
                             )
 
@@ -98,11 +92,21 @@ const postRegister = async (req, res) => {
                 })
             })
         })
+}
 
+const logout = async (req, res) => {
+    // The empty string"" tries to clear the cookie. 
+    // If that fails, setting the expiration date to the past is a fallback
+    res.cookie("token", "", {
+        httpOnly: true,
+        expires: new Date(0)
+    })
+    .send();
 }
 
 module.exports = {
     getUsers,
     postRegister,
-    authUser
+    authUser,
+    logout
 }
