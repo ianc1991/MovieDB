@@ -10,7 +10,7 @@ router.route('/allmovies').get(moviesCtrl.newMovies);
 router.route('/allmovies/:searchtext').get(moviesCtrl.getMovieBySearchText);
 
 // New Movies
-router.route('/').get(auth, moviesCtrl.newMovies);
+router.route('/').get(moviesCtrl.newMovies);
 
 // Get movie by id
 router.route('/:id').get(moviesCtrl.getMovieById);
