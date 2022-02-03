@@ -10,7 +10,7 @@ router.route('/userlist').get(usersCtrl.getUsers);
 router.route('/register').post(usersCtrl.postRegister);
 
 // Authorize user for login
-router.route('/auth').post(usersCtrl.authUser);
+router.route('/login').post(usersCtrl.authUser);
 
 // Log out
 router.route('/logout').get(usersCtrl.logout);

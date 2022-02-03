@@ -8,8 +8,13 @@ import MovieList from './components/MovieList/MovieList';
 import Loading from './components/Loading/Loading';
 import Login from './components/Login/Login';
 
+import axios from 'axios';
+
 // TODO - CSS on repeat elements/classes affecting all elements and classes.
 //        Need to install CSS Modules or something similar.
+
+// Allows cookies to be set in browser but isn't working. Settings are set in the service.
+//axios.defaults.withCredentials = true;
 
 function App() {
 

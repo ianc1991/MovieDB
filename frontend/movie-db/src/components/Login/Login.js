@@ -1,123 +1,59 @@
 import './login.css'
-import AuthService from "../../Services/Users/auth";
+import AuthService from '../../Services/Users/auth';
 import React from 'react';
+import Register from '../Register/Register';
+import { useState } from 'react';
 
-const required = value => {
-  if (!value) {
-    return (
-      <div className="alert alert-danger" role="alert">
-        This field is required!
-      </div>
-    );
-  }
-};
+const Login = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-class Login extends React.Component {
-  constructor(props) {
-    super(props);
-    this.handleLogin = this.handleLogin.bind(this);
-    this.onChangeEmail = this.onChangeEmail.bind(this);
-    this.onChangePassword = this.onChangePassword.bind(this);
-
-    this.state = {
-      email: "",
-      password: "",
-      loading: false,
-      message: ""
-    };
-  }
-
-  onChangeEmail(e) {
-    this.setState({
-      email: e.target.value
-    });
-  }
-
-  onChangePassword(e) {
-    this.setState({
-      password: e.target.value
-    });
-  }
-
-  handleLogin(e) {
+  async function login(e) {
     e.preventDefault();
 
-    this.setState({
-      message: "",
-      loading: true
-    });
+    try {
+        const loginData = {
+          email,
+          password
+        };
 
-    this.form.validateAll();
+        await AuthService.login(loginData);
 
-    if (this.checkBtn.context._errors.length === 0) {
-      AuthService.login(this.state.username, this.state.password).then(
-        () => {
-          this.props.history.push("/profile");
-          window.location.reload();
-        },
-        error => {
-          const resMessage =
-            (error.response &&
-              error.response.data &&
-              error.response.data.message) ||
-            error.message ||
-            error.toString();
-
-          this.setState({
-            loading: false,
-            message: resMessage
-          });
-        }
-      );
-    } else {
-      this.setState({
-        loading: false
-      });
-    }
+    } catch(e) {
+        console.error(e);
+      }
   }
-
-    render() { return (
+  
+  return (
       <div className='loginScreenContainer'>
         <div className='loginFormContainer bg-dark'>
           <h1>Login</h1>
           <form 
             className='formContainer' 
-            onSubmit={this.handleLogin}
+            onSubmit={login}
           >
             <input 
               type='text'
               placeholder="Email"
-              value={this.state.email}
-              onChange={this.onChangeEmail}
+              onChange={(e) => setEmail(e.target.value)}
               required
             />
             <input 
               type='password' 
               placeholder="Password" 
-              value={this.state.password}
-              onChange={this.onChangePassword}
+              onChange={(e) => setPassword(e.target.value)}
               required
             />
             <input 
               type='submit'
               value='Login' 
               className="btn btn-outline-success"
-              disabled={this.state.loading}
             />
-              {this.state.loading && (
-                  <span className="spinner-border spinner-border-sm"></span>
-                )}
-            {this.state.message && (
-              <div className="form-group">
-                <div className="alert alert-danger" role="alert">
-                  {this.state.message}
-                </div>
-              </div>
-            )}
           </form>
         </div>
+        <Register />
       </div>
-    )}
-};
+    )
+}
 
 export default Login;

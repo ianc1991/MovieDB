@@ -13,12 +13,14 @@ const PORT = process.env.PORT || 4000;
 connectDB();
 
 
-app.use(cors());
+app.use(cors({
+  credentials: true,
+  origin: ['http://localhost:3000'],
+}));
 
 // Morgan logger
 app.use(logger('dev'));
 
-// TODO - Uninstall bodyparser 
 app.use(express.json());
 app.use(cookieParser());
 
