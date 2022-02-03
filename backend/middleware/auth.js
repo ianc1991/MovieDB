@@ -1,24 +1,26 @@
 const config = require('config');
 const jwt = require('jsonwebtoken');
+const secret = config.get('jwtSecret');
 
+// Auth middleware that checks if user is currently signed in / authorized
 function auth(req, res, next) {
-    //const token = req.header('x-auth-token');
-    console.log(req.cookie)
-
-    // Check for token
-    if(!token) res.status(401).json({ msg: 'No token, auth denied'}); // 401 = unauthrized
 
     try{
-        //Verify token
-        const decoded = jwt.verify(token, config.get('jwtSecret'));
-        // Add user from payload
-        req.user = decoded;
+        const token = req.cookies.token;
+
+        // Verify token
+        if(!token) return res.status(401).json({ msg: 'Unauthorized' });
+
+        const verified = jwt.verify(token, secret)
+
+        // Create request property
+        req.user = verified.user;
+
         next();
     } catch(e) {
-        console.error(err);
+        console.error(e);
         res.status(401).json({ msg: 'Unauthorized' });
     }
-    
 }
 
 module.exports = auth;

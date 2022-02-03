@@ -4,6 +4,7 @@ const express = require('express');
 const app = express();
 const connectDB = require("./config/db");
 const Mongoose = require("mongoose");
+const cookieParser = require("cookie-parser");
 
 const PORT = process.env.PORT || 5000;
 
@@ -11,6 +12,7 @@ const PORT = process.env.PORT || 5000;
 connectDB();
 
 app.use(express.json());
+app.use(cookieParser());
 
 app.use("/users/api", usersRouter);
 

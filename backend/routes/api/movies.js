@@ -1,6 +1,7 @@
 const express = require ("express");
 const router = express.Router();
 const moviesCtrl = require("../../controllers/moviesController");
+const auth = require("../../middleware/auth")
 
 // Used for searching all movies - defaults to prevent crashing server when /:searchtext is empty 
 router.route('/allmovies').get(moviesCtrl.newMovies);
@@ -9,7 +10,7 @@ router.route('/allmovies').get(moviesCtrl.newMovies);
 router.route('/allmovies/:searchtext').get(moviesCtrl.getMovieBySearchText);
 
 // New Movies
-router.route('/').get(moviesCtrl.newMovies);
+router.route('/').get(auth, moviesCtrl.newMovies);
 
 // Get movie by id
 router.route('/:id').get(moviesCtrl.getMovieById);

@@ -10,16 +10,6 @@ const getAllMovies = async (req, res) => {
 }
 
 // Movie by search
-// exports.validate = (method) => {
-//     switch (method) {
-//         case 'getMovieBySearchText': {
-//             return [
-//                 body('req.params.searchtext', 'no search text found').trim() > 0,
-//             ]
-//         }
-//     }
-// }
-
 const getMovieBySearchText = async (req, res) => {
     const searchText = req.params.searchtext;
     const searchedMovies = await Movies.find({ $text: { $search: searchText } }).limit(10).sort({ score: { $meta: "textScore" } });
