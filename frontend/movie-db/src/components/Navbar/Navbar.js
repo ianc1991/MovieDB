@@ -1,15 +1,17 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import AuthContext from '../../context/AuthContext';
 import './navbar.css'
 
 
 const Navbar = () => {
     
     const navigate = useNavigate();
-    // const handleSearchText = e => {
-    //     setText(e.target.value);
-    // }
 
+    // Reads value from AuthContext to check if user is logged in
+    const {loggedIn} = useContext(AuthContext);
+
+    // TODO - Replace this with useState
     const handleSearchSubmit = () => {
         navigate('/movielist')
     }
@@ -36,9 +38,18 @@ const Navbar = () => {
                                     <li><a className="dropdown-item" href="/">Genres</a></li>
                                 </ul>
                             </li>
-                            <li className="nav-item">
-                                <a className="nav-link" aria-current="page" href="/login">Login</a>
-                            </li>
+                            {loggedIn === false && (
+                                <li className="nav-item">
+                                    <a className="nav-link" aria-current="page" onClick={() => navigate(`/login`)}>Login</a>
+                                </li>
+                                )
+                                }
+                                {loggedIn === true && (
+                                    <li className="nav-item">
+                                    <a className="nav-link" aria-current="page" onClick={() => navigate(`/`)}>Logout</a>
+                                    </li>
+                                )}
+
                         </ul>
                         <form className="d-flex" 
                             onSubmit={handleSearchSubmit} 

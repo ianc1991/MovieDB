@@ -9,10 +9,13 @@ router.route('/userlist').get(usersCtrl.getUsers);
 // Register user
 router.route('/register').post(usersCtrl.postRegister);
 
-// Authorize user for login
-router.route('/login').post(usersCtrl.authUser);
+// Login user
+router.route('/login').post(usersCtrl.login);
 
 // Log out
 router.route('/logout').get(usersCtrl.logout);
+
+// Check if logged in
+router.route('/loggedIn').get(usersCtrl.loggedIn);
 
 module.exports = router;

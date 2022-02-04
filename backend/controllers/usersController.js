@@ -10,8 +10,8 @@ const getUsers = async (req, res) => {
     return res.json(users);
 }
 
-// Authorize user for login
-const authUser = async (req, res) => {
+// Log user in
+const login = async (req, res) => {
     const { email, password } = req.body;
 
     // Simple validation
@@ -37,7 +37,9 @@ const authUser = async (req, res) => {
                         (err, token) => {
                             if(err) throw err;
                             res.cookie("token", token, {
-                                httpOnly: true
+                                httpOnly: true,
+                                secure: true,
+                                sameSite: "none",
                             })
                             .send();
                         }
@@ -82,7 +84,9 @@ const postRegister = async (req, res) => {
                                 (err, token) => {
                                     if(err) throw err;
                                     res.cookie("token", token, {
-                                        httpOnly: true
+                                        httpOnly: true,
+                                        secure: true,
+                                        sameSite: "none",
                                     })
                                     .send();
                                 }
@@ -94,12 +98,29 @@ const postRegister = async (req, res) => {
         })
 }
 
+// Check if user is logged in
+const loggedIn = (req, res) => {
+    try{
+        const token = req.cookies.token;
+        // Verify token
+        if(!token) return res.json(false);
+        jwt.verify(token, config.get('jwtSecret'));
+
+        res.send(true);
+    } catch(e) {
+        res.json(false);
+    }
+}
+
+// Log user out
 const logout = async (req, res) => {
-    // The empty string"" tries to clear the cookie. 
+    // The empty string "" tries to clear the cookie. 
     // If that fails, setting the expiration date to the past is a fallback
     res.cookie("token", "", {
         httpOnly: true,
-        expires: new Date(0)
+        expires: new Date(0),
+        secure: true,
+        sameSite: "none",
     })
     .send();
 }
@@ -107,6 +128,7 @@ const logout = async (req, res) => {
 module.exports = {
     getUsers,
     postRegister,
-    authUser,
-    logout
+    login,
+    logout,
+    loggedIn
 }
