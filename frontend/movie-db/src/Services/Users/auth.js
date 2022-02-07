@@ -22,6 +22,12 @@ class AuthService {
             withCredentials: true
         });
     }
+
+    logout(){
+        return http.get('/logout', {
+            withCredentials: true
+        })
+    }
 }
 
 export default new AuthService();

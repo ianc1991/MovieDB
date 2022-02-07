@@ -1,0 +1,20 @@
+.registerScreenContainer {
+    display: flex;
+    justify-content: center;
+}
+
+.registerFormContainer {
+    padding: 15px;
+}
+
+.registerFormElement {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+}
+
+.registerFormElement input {
+    max-width: 210px;
+}

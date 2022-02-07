@@ -1,4 +1,7 @@
-import { useState } from "react";
+import './register.css'
+import { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import AuthContext from "../../context/AuthContext";
 import AuthService from "../../Services/Users/auth";
 // TODO - Validation etc.
 const Register = () => {
@@ -6,6 +9,9 @@ const Register = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [passwordVerify, setPasswordVerify] = useState("");
+
+    const {getLoggedIn} = useContext(AuthContext);
+    const navigate = useNavigate();
 
     async function register(e) {
         e.preventDefault();
@@ -18,6 +24,8 @@ const Register = () => {
             };
 
             await AuthService.register(registerData);
+            await getLoggedIn();
+            navigate('/');
 
         } catch(e) {
             console.error(e);
@@ -25,23 +33,25 @@ const Register = () => {
     }
 
   return (
-      <div>
-          <h1>Register a new account</h1>
-          <form onSubmit={register}>
-            <input type='text' placeholder='Name'
-                onChange={(e) => setName(e.target.value)}
-            />
-            <input type='email' placeholder='Email'
-                onChange={(e) => setEmail(e.target.value)}
-            />
-            <input type='password' paceholder='Password'
-                onChange={(e) => setPassword(e.target.value)}
-            />
-            <input type='password' paceholder='Verify your password'
-                onChange={(e) => setPasswordVerify(e.target.value)}
-            />
-            <button type='submit'>Register</button>
-          </form>
+      <div className="registerScreenContainer">
+          <div className="bg-dark registerFormContainer">
+            <h1>Register a new account</h1>
+            <form onSubmit={register} className='registerFormElement'>
+                <input type='text' placeholder='Name' required
+                    onChange={(e) => setName(e.target.value)}
+                />
+                <input type='email' placeholder='Email' required
+                    onChange={(e) => setEmail(e.target.value)}
+                />
+                <input type='password' paceholder='Password' required
+                    onChange={(e) => setPassword(e.target.value)}
+                />
+                <input type='password' paceholder='Verify your password' required
+                    onChange={(e) => setPasswordVerify(e.target.value)}
+                />
+                <button className='btn btn-outline-success' type='submit'>Register</button>
+            </form>
+          </div>
       </div>
   )
 };

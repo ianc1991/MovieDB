@@ -1,12 +1,19 @@
 import './login.css'
 import AuthService from '../../Services/Users/auth';
-import React from 'react';
+import React, { useContext } from 'react';
 import Register from '../Register/Register';
 import { useState } from 'react';
+import AuthContext from '../../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  // Check if logged in
+  const {getLoggedIn} = useContext(AuthContext);
+
+  const navigate = useNavigate();
 
   async function login(e) {
     e.preventDefault();
@@ -18,6 +25,8 @@ const Login = () => {
         };
 
         await AuthService.login(loginData);
+        await getLoggedIn();
+        navigate('/');
 
     } catch(e) {
         console.error(e);
@@ -29,7 +38,7 @@ const Login = () => {
         <div className='loginFormContainer bg-dark'>
           <h1>Login</h1>
           <form 
-            className='formContainer' 
+            className='loginFormElement' 
             onSubmit={login}
           >
             <input 

@@ -13,9 +13,9 @@ function App() {
   return (
     <div>
     <AuthContextProvider>
-        <Navbar />
-        <Router />
-      </AuthContextProvider>
+      <Navbar />
+      <Router />
+    </AuthContextProvider>
     </div>
   );
 }

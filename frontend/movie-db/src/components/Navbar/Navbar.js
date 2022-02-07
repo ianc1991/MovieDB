@@ -1,6 +1,7 @@
 import { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AuthContext from '../../context/AuthContext';
+import LogoutBtn from '../Logout/LogoutBtn';
 import './navbar.css'
 
 
@@ -46,7 +47,7 @@ const Navbar = () => {
                                 }
                                 {loggedIn === true && (
                                     <li className="nav-item">
-                                    <a className="nav-link" aria-current="page" onClick={() => navigate(`/`)}>Logout</a>
+                                        <LogoutBtn />
                                     </li>
                                 )}
 
