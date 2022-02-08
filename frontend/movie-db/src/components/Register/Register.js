@@ -16,6 +16,8 @@ const Register = () => {
     async function register(e) {
         e.preventDefault();
 
+        if (password !== passwordVerify) return alert('Passwords do not match password');
+
         try {
             const registerData = {
                 name,
@@ -43,10 +45,10 @@ const Register = () => {
                 <input type='email' placeholder='Email' required
                     onChange={(e) => setEmail(e.target.value)}
                 />
-                <input type='password' paceholder='Password' required
+                <input type='password' placeholder='Password' required
                     onChange={(e) => setPassword(e.target.value)}
                 />
-                <input type='password' paceholder='Verify your password' required
+                <input type='password' placeholder='Verify your password' required
                     onChange={(e) => setPasswordVerify(e.target.value)}
                 />
                 <button className='btn btn-outline-success' type='submit'>Register</button>
