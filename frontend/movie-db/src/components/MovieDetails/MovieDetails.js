@@ -25,12 +25,13 @@ const MovieDetails = () => {
 
     // useState needs to be initialized with empty nested arrays/objects that are used, else type will be undefined and page will fail to compile
     const [movieDetails, setMovieDetails] = useState({genres:[], cast:[], directors:[], writers:[], imdb:{}});
+    const [movieComments, setMovieComments] = useState([{}]);
 
     useEffect(() => {
         retrieveMovieDetails();
-        // The comment below disables missing dependency warning
+        retrieveMovieComments();
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    },[]);
     
     // Gets movie details by 'id' and sets it to 'movieDetails'
     const retrieveMovieDetails = () => {
@@ -43,6 +44,18 @@ const MovieDetails = () => {
                     console.log('Error at retrieveMovieDetails(): ' + e);
             }))
     };
+
+    const retrieveMovieComments = () => {
+        trackPromise(
+            movieDataSrv.getMovieComments(id)
+                .then(response => {
+                    setMovieComments(response.data);
+                })
+                .catch(e => {
+                    console.log('Error at retrieveMovieComments: ' + e);
+                })
+        )
+    }
 
     // If image 404
     const handleImgError = e => {
@@ -122,6 +135,13 @@ const MovieDetails = () => {
                             {fullPlotToggled ? 'Hide full plot' : 'Read full plot'}
                         </button>
                         
+                </div>
+            </div>
+            <div className='movieCommentContainer'>
+                <div className='commentBox'>
+                    <p className='commentText'>
+                        {movieComments[0].text}
+                    </p>
                 </div>
             </div>
         </div>

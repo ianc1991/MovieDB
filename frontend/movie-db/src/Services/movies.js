@@ -8,7 +8,7 @@ class MovieDataService {
 
     // Get 5 newest movies
     getNew() {
-        return http.get('/');
+        return http.get('/')
     }
 
     // Get by Id
@@ -16,11 +16,17 @@ class MovieDataService {
         return http.get(`/${id}`)
     }
 
+    // Get movie comments
+    getMovieComments(id) {
+        return http.get(`/comments/${id}`)
+    }
+
     // Get by search text
     getMoviesBySearchText(searchText) {
         return http.get(`/allmovies/${searchText}`)
     }
 
+    // For movie list pagination (incomplete)
     getNextPage(lastItem) {
         return http.get(`/nextpage/${lastItem}`)
     }

@@ -18,6 +18,7 @@ router.route('/:id').get(moviesCtrl.getMovieById);
 // Get next page of itmes
 router.route('/nextpage/:id').get(moviesCtrl.nextPage);
 
-
+// Get comments
+router.route('/comments/:id').get(moviesCtrl.getComments);
 
 module.exports = router;

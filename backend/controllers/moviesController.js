@@ -1,5 +1,5 @@
+const Comments = require("../models/Comments");
 const Movies = require("../models/Movies");
-//const { body, validationResult } = require('express-validator')
 
 
 // All movies
@@ -30,8 +30,14 @@ const newMovies = async (req, res) => {
     res.json(sortedMoviesByDate);
 }
 
+// For movie pagination (incomplete)
 const nextPage = async (req, res) => {
     console.log(req.params.id);
+}
+
+const getComments = async (req, res) => {
+    const comments = await Comments.find({movie_id: req.params.id}).sort({date: -1});
+    res.json(comments);
 }
 
 
@@ -40,7 +46,8 @@ module.exports = {
     getMovieById,
     newMovies,
     getMovieBySearchText,
-    nextPage
+    nextPage,
+    getComments
 }
 
 
