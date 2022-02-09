@@ -1,12 +1,14 @@
 import './movieDetails.css';
 import { useState, useEffect, useRef } from "react";
+import { useContext } from 'react';
+import AuthContext from '../../context/AuthContext';
 import movieDataSrv from '../../Services/movies';
 //Promise Tracker
 import { usePromiseTracker } from 'react-promise-tracker';
 import { trackPromise } from 'react-promise-tracker';
 // FontAwesome
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faStar } from '@fortawesome/free-solid-svg-icons';
+import { faStar, faCommentDots } from '@fortawesome/free-solid-svg-icons';
 import { faImdb } from '@fortawesome/free-brands-svg-icons';
 // Assets
 import noImageAvailablePicture from '../../assets/noImage.png';
@@ -29,6 +31,11 @@ const MovieDetails = () => {
 
     useEffect(() => {
         retrieveMovieDetails();
+        // Below line disables missing dependency warning... Removing dependency array breaks rendering....
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[]);
+
+    useEffect(() => {
         retrieveMovieComments();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     },[]);
@@ -45,6 +52,7 @@ const MovieDetails = () => {
             }))
     };
 
+    // Get comments for movie
     const retrieveMovieComments = () => {
         trackPromise(
             movieDataSrv.getMovieComments(id)
@@ -65,6 +73,14 @@ const MovieDetails = () => {
     // For the full plot button toggle
     const [fullPlotToggled, setPlotToggle] = useState(false);
     const toggleFullPlot = () => setPlotToggle(!fullPlotToggled);
+
+    // Leave comment
+    const leaveComment = (e) => {
+        e.preventDefault();
+    }
+
+    // Reads value from AuthContext to check if user is logged in
+    const {loggedIn} = useContext(AuthContext);
 
     if(promiseInProgress) {
         return <></>
@@ -139,9 +155,37 @@ const MovieDetails = () => {
             </div>
             <div className='movieCommentContainer'>
                 <div className='commentBox'>
-                    <p className='commentText'>
-                        {movieComments[0].text}
-                    </p>
+                    <h1>User Comments <FontAwesomeIcon icon={faCommentDots}/></h1>
+                        { loggedIn === true ? (
+                            <form onSubmit={leaveComment}>
+                                <input type='text' />
+                                <input 
+                                    type='submit'
+                                    value='Submit Comment' 
+                                    className="btn btn-outline-success"
+                                />
+                            </form>
+                        )
+                        :
+                        (
+                            'LOGIN TO POST COMMENTS'
+                        )}
+                        { movieComments.length >= 1 ? (
+                            movieComments.map((comment, i)=>(
+                                <div key={i}>
+                                    <div className="card text-dark bg-secondary mb-3">
+                                        <div className="card-body">
+                                            <h5 className="card-title">{comment.name}</h5>
+                                            <p className="card-text">{comment.text}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))
+                        )
+                    :
+                    (
+                        "Nothing found"
+                    )}
                 </div>
             </div>
         </div>

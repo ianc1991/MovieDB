@@ -53,7 +53,7 @@ const Login = () => {
               onChange={(e) => setPassword(e.target.value)}
               required
             />
-            <input 
+            <input
               type='submit'
               value='Login' 
               className="btn btn-outline-success"
