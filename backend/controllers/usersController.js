@@ -39,7 +39,7 @@ const login = async (req, res) => {
                             res.cookie("token", token, {
                                 httpOnly: true,
                                 secure: true,
-                                sameSite: "none",
+                                sameSite: "strict",
                             })
                             .send();
                         }
@@ -86,7 +86,7 @@ const postRegister = async (req, res) => {
                                     res.cookie("token", token, {
                                         httpOnly: true,
                                         secure: true,
-                                        sameSite: "none",
+                                        sameSite: "strict",
                                     })
                                     .send();
                                 }
@@ -120,7 +120,7 @@ const logout = async (req, res) => {
         httpOnly: true,
         expires: new Date(0),
         secure: true,
-        sameSite: "none",
+        sameSite: "strict",
     })
     .send();
 }
