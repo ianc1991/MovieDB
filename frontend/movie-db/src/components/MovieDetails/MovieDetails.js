@@ -3,6 +3,7 @@ import { useState, useEffect, useRef } from "react";
 import { useContext } from 'react';
 import AuthContext from '../../context/AuthContext';
 import movieDataSrv from '../../Services/movies';
+import auth from '../../Services/Users/auth';
 //Promise Tracker
 import { usePromiseTracker } from 'react-promise-tracker';
 import { trackPromise } from 'react-promise-tracker';
@@ -73,14 +74,22 @@ const MovieDetails = () => {
     // For the full plot button toggle
     const [fullPlotToggled, setPlotToggle] = useState(false);
     const toggleFullPlot = () => setPlotToggle(!fullPlotToggled);
-
-    // Leave comment
-    const leaveComment = (e) => {
-        e.preventDefault();
-    }
-
+    
     // Reads value from AuthContext to check if user is logged in
     const {loggedIn} = useContext(AuthContext);
+    
+    // Leave comment
+    const [userComment, setUserComment] = useState('');
+    const leaveComment = async (e) => {
+        e.preventDefault();
+        if (!loggedIn) return alert('You can only comment if you are logged in');
+        const validToken = await auth.loggedIn();
+        if (validToken){
+            movieDataSrv.postMovieComment(userComment, id);
+        } else {
+            console.log('Something went wrong when posting comment')
+        }
+    }
 
     // Show loading screen if promiseInProgress
     if(promiseInProgress) {
@@ -161,7 +170,9 @@ const MovieDetails = () => {
                             <form className='commentForm' onSubmit={leaveComment}>
                                 <textarea 
                                     className='commentTextInput'
+                                    placeholder='Enter your comment here...'
                                     type='text' 
+                                    onChange={(e) => setUserComment(e.target.value)}
                                 />
                                 <input
                                     type='submit'

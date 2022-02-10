@@ -28,6 +28,13 @@ class AuthService {
             withCredentials: true
         })
     }
+
+    // Check if logged in
+    loggedIn(){
+        return http.get('/loggedIn', {
+            withCredentials: true,
+        });
+    }
 }
 
 export default new AuthService();

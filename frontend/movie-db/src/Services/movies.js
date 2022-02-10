@@ -21,6 +21,16 @@ class MovieDataService {
         return http.get(`/comments/${id}`)
     }
 
+    // Post movie comment
+    postMovieComment(comment, id) {
+        return http.post(`/comments/postcomment/${id}`, {
+            text: comment
+        },
+        {
+            withCredentials: true
+        })
+    }
+
     // Get by search text
     getMoviesBySearchText(searchText) {
         return http.get(`/allmovies/${searchText}`)

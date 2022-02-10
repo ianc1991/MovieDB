@@ -1,5 +1,8 @@
 const Comments = require("../models/Comments");
+const mongoose = require('mongoose');
+const User = require('../models/Users');
 const Movies = require("../models/Movies");
+const jwt_decode = require('jwt-decode')
 
 
 // All movies
@@ -35,9 +38,28 @@ const nextPage = async (req, res) => {
     console.log(req.params.id);
 }
 
+// Get comments
 const getComments = async (req, res) => {
     const comments = await Comments.find({movie_id: req.params.id}).sort({date: -1});
     res.json(comments);
+}
+
+//Post comments
+const postComment = async (req, res) => {
+    const token = req.cookies.token;
+    if (!token) return res.status(401).json({'message': 'Unauthorized'});
+    const decoded = jwt_decode(token);
+    const user = await User.findById(decoded.id);
+    const commentToSave = new Comments({
+        name: user.name,
+        email: user.email,
+        text: req.body.text,
+        movie_id: req.params.id,
+        //movie_id: mongoose.Types.ObjectId(req.params.id),
+        date: Date.now()
+    });
+    console.log(commentToSave);
+    return commentToSave.save();
 }
 
 
@@ -47,7 +69,8 @@ module.exports = {
     newMovies,
     getMovieBySearchText,
     nextPage,
-    getComments
+    getComments,
+    postComment
 }
 
 

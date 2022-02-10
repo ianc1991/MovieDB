@@ -3,6 +3,7 @@ const bcrypt = require('bcryptjs');
 const config = require('config');
 const jwt = require('jsonwebtoken');
 
+
 // Get all users (for testing)
 const getUsers = async (req, res) => {
     const users = await User.find();
@@ -99,14 +100,14 @@ const postRegister = async (req, res) => {
 }
 
 // Check if user is logged in
-const loggedIn = (req, res) => {
+const loggedIn = async (req, res) => {
     try{
         const token = req.cookies.token;
         // Verify token
         if(!token) return res.json(false);
         jwt.verify(token, config.get('jwtSecret'));
-
         res.send(true);
+
     } catch(e) {
         res.json(false);
     }

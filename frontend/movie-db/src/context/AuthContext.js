@@ -1,4 +1,4 @@
-import axios from 'axios';
+import auth from '../Services/Users/auth';
 import { createContext, useEffect, useState } from 'react';
 
 // Checks if a user is logged in whenever a component is rendered
@@ -11,9 +11,11 @@ function AuthContextProvider(props) {
     const [loggedIn, setLoggedIn] = useState(undefined);
 
     async function getLoggedIn() {
-        const loggedInRes = await axios.get('http://localhost:5000/users/api/loggedIn', {
-            withCredentials: true,
-        });
+        // const loggedInRes = await axios.get('http://localhost:5000/users/api/loggedIn', {
+        //     withCredentials: true,
+        // });
+
+        const loggedInRes = await auth.loggedIn();
 
         // data is the axios response body. returns true/false
         setLoggedIn(loggedInRes.data)
