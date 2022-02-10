@@ -25,11 +25,6 @@ const MovieDetails = () => {
     // Promise tracker
     const { promiseInProgress } = usePromiseTracker();
 
-    // Show loading screen if promiseInProgress
-    if(promiseInProgress) {
-        return <></>
-    }
-
     // useState needs to be initialized with empty nested arrays/objects that are used, else type will be undefined and page will fail to compile
     const [movieDetails, setMovieDetails] = useState({genres:[], cast:[], directors:[], writers:[], imdb:{}});
     const [movieComments, setMovieComments] = useState([{}]);
@@ -86,6 +81,11 @@ const MovieDetails = () => {
 
     // Reads value from AuthContext to check if user is logged in
     const {loggedIn} = useContext(AuthContext);
+
+    // Show loading screen if promiseInProgress
+    if(promiseInProgress) {
+        return <></>
+    }
 
     return (
         <div className='mainContainer'>
