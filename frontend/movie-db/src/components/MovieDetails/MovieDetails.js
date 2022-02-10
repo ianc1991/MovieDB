@@ -25,6 +25,11 @@ const MovieDetails = () => {
     // Promise tracker
     const { promiseInProgress } = usePromiseTracker();
 
+    // Show loading screen if promiseInProgress
+    if(promiseInProgress) {
+        return <></>
+    }
+
     // useState needs to be initialized with empty nested arrays/objects that are used, else type will be undefined and page will fail to compile
     const [movieDetails, setMovieDetails] = useState({genres:[], cast:[], directors:[], writers:[], imdb:{}});
     const [movieComments, setMovieComments] = useState([{}]);
@@ -81,10 +86,6 @@ const MovieDetails = () => {
 
     // Reads value from AuthContext to check if user is logged in
     const {loggedIn} = useContext(AuthContext);
-
-    if(promiseInProgress) {
-        return <></>
-    }
 
     return (
         <div className='mainContainer'>
@@ -157,9 +158,12 @@ const MovieDetails = () => {
                 <div className='commentBox'>
                     <h1>User Comments <FontAwesomeIcon icon={faCommentDots}/></h1>
                         { loggedIn === true ? (
-                            <form onSubmit={leaveComment}>
-                                <input type='text' />
-                                <input 
+                            <form className='commentForm' onSubmit={leaveComment}>
+                                <textarea 
+                                    className='commentTextInput'
+                                    type='text' 
+                                />
+                                <input
                                     type='submit'
                                     value='Submit Comment' 
                                     className="btn btn-outline-success"
