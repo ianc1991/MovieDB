@@ -2,6 +2,8 @@ import glowSign from '../../../assets/NewReleases.png';
 import './carousel.css';
 import movieDataSrv from '../../../Services/movies';
 import { useState, useEffect } from "react";
+import { useNavigate } from 'react-router-dom';
+import { trackPromise } from 'react-promise-tracker';
 
 
 // TODO - Pictures resize a tiny bit when changing slides. Mostly fixed, but could be tweaked more.
@@ -10,6 +12,8 @@ import { useState, useEffect } from "react";
 
 const Carousel = () => {
 
+    const navigate = useNavigate();
+
     const [newMovies, setNewMovies] = useState([]);
 
     useEffect(() => {
@@ -17,13 +21,15 @@ const Carousel = () => {
     }, []);
 
     const retrieveNewMovies = () => {
-        movieDataSrv.getNew()
-            .then(response => {
-                setNewMovies(response.data);
-            })
-            .catch(e => {
-                console.log(e);
-            });
+        trackPromise(
+            movieDataSrv.getNew()
+                .then(response => {
+                    setNewMovies(response.data);
+                })
+                .catch(e => {
+                    console.log(e);
+                })
+        )
     };
 
     return (
@@ -39,8 +45,8 @@ const Carousel = () => {
                 </ol>
                 <div className="carousel-inner">
                     {newMovies.map((movie, i) => (
-                            <div key={movie._id} className={i === 0 ? "carousel-item active" : "carousel-item"} >
-                                <a href={`/moviedetails?id=${movie._id}`}><img className="d-block w-100" src={movie.poster} alt="Movie poster" /></a>
+                            <div key={movie._id} onClick={()=>navigate(`/moviedetails?id=${movie._id}`) } className={i === 0 ? "carousel-item active" : "carousel-item"} >
+                                <img className="d-block w-100" src={movie.poster} alt="Movie poster" />
                             </div>
                         ))}
                 </div>
