@@ -39,7 +39,7 @@ const Carousel = () => {
                 </ol>
                 <div className="carousel-inner">
                     {newMovies.map((movie, i) => (
-                            <div key={i} className={i === 0 ? "carousel-item active" : "carousel-item"} >
+                            <div key={movie._id} className={i === 0 ? "carousel-item active" : "carousel-item"} >
                                 <a href={`/moviedetails?id=${movie._id}`}><img className="d-block w-100" src={movie.poster} alt="Movie poster" /></a>
                             </div>
                         ))}
