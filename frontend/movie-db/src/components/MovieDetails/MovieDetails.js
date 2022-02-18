@@ -5,6 +5,7 @@ import AuthContext from '../../context/AuthContext';
 import movieDataSrv from '../../Services/movies';
 import auth from '../../Services/Users/auth';
 import { useNavigate } from 'react-router-dom';
+import Pagination from "react-js-pagination";
 //Promise Tracker
 import { usePromiseTracker } from 'react-promise-tracker';
 import { trackPromise } from 'react-promise-tracker';
@@ -74,8 +75,8 @@ const MovieDetails = () => {
         const [currentPage, setCurrentPage] = useState(1);
         const [commentsPerPage] = useState(5);
 
-        const pageNumberClicked = (e) => {
-            setCurrentPage(e.target.id)
+        const pageNumberClicked = (pageNumber) => {
+            setCurrentPage(pageNumber)
         }
 
         // Logic for displaying comments
@@ -83,27 +84,17 @@ const MovieDetails = () => {
         const indexOfFirstComment = indexOfLastComment - commentsPerPage;
         const currentComments = movieComments.slice(indexOfFirstComment, indexOfLastComment);
 
-        // Logic for displaying page numbers
-        const pageNumbers = [];
-        for (let i = 1; i <= Math.ceil(movieComments.length / commentsPerPage); i++) {
-            pageNumbers.push(i);
-        }
-
         // Page element
         const PageNumbersElement = () => { return (
-            <div className='paginationNumberContainer'>
-                            { pageNumbers.map(number => (
-                                        <li
-                                            key={number}
-                                            id={number}
-                                            onClick={pageNumberClicked}
-                                        >
-                                            {number}
-                                        </li>
-                                ))
-                            }
-
-            </div>
+            <Pagination
+                activePage={currentPage}
+                totalItemsCount={movieComments.length}
+                itemsCountPerPage={5}
+                onChange={pageNumberClicked}
+                // Bootstrap props
+                itemClass="page-item"
+                linkClass="page-link"
+            />
         )}
     // }
 
