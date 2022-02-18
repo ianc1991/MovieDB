@@ -9,23 +9,23 @@
 .titleContainer {
     display: flex;
     flex-direction: column;
-    width: 50%;
+    width: 80%;
     text-align: left;
 }
 
 .posterContainer {
-    width: 50%;
+    width: 80%;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
 .genreContainer {
-    display:inline;
-    width: 50%;
+    width: inherit;
 }
 .genreMapContainer {
     display: inline;
+    
 }
 
 .ratingAndCardContainer {
@@ -36,7 +36,8 @@
 }
 
 .genreButton {
-    margin: 5px;
+    margin-top: 5px;
+    margin-right: 5px;
 }
 
 h1, p {
@@ -55,7 +56,7 @@ h1, p {
 }
 
 .cardPlot {
-    max-width: 50%;
+    max-width: 80%;
     margin-top: 10px;
 }
 
@@ -64,6 +65,14 @@ h1, p {
 }
 
 /* COMMENTS */
+.movieCommentContainer {
+    width: 100%;
+}
+
+.commentContainer {
+    width: 90%;
+}
+
 .commentBox {
     display: flex;
     flex-direction: column;
@@ -95,6 +104,7 @@ h1, p {
 .commentText {
     color: black;
 }
+/* END OF COMMENTS */
 
 .loginLink {
     color: blue;
@@ -113,25 +123,37 @@ h1, p {
 }
 
 @media only screen and (min-width: 800px) {
+    .titleContainer{
+        width: 50%;
+    }
+
     .posterContainer {
         justify-content: space-between;
         flex-direction: row;
         align-items: flex-end;
+        width: 50%;
     }
 
     .mainContainer {
         margin-left: 0;
     }
 
+    .genreContainer {
+        width: 50%;
+    }
+
     .ratingAndCardContainer {
         margin-top: 0;
     }
 
+    .cardPlot {
+        max-width: 50%;
+    }
     .cardDetails {
         margin-left: 20px;
     }
 
     .movieCommentContainer {
-        width: 50%;
+        width: 80%;
     }
   }

@@ -85,6 +85,7 @@ const MovieDetails = () => {
         const currentComments = movieComments.slice(indexOfFirstComment, indexOfLastComment);
 
         // Page element
+        // TODO - Figure out how to make this responsive
         const PageNumbersElement = () => { return (
             <Pagination
                 activePage={currentPage}
@@ -218,7 +219,7 @@ const MovieDetails = () => {
                     <PageNumbersElement/>
                     { movieComments.length >= 1 ? (
                         currentComments.map((comment)=>(
-                            <div key={comment._id}>
+                            <div key={comment._id} className='commentContainer'>
                                 <div className="card text-dark bg-light mb-3">
                                     <div className="card-body">
                                         <h5 className="card-title">{comment.name}</h5>
