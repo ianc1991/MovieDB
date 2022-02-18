@@ -63,6 +63,7 @@ h1, p {
     padding: 3px 6px !important;
 }
 
+/* COMMENTS */
 .commentBox {
     display: flex;
     flex-direction: column;
@@ -89,6 +90,26 @@ h1, p {
 
 .commentForm .btn {
     max-width: 150px;
+}
+
+.commentText {
+    color: black;
+}
+
+.loginLink {
+    color: blue;
+}
+
+.loginLink:hover {
+    cursor: pointer;
+}
+
+.paginationNumberContainer {
+    color: white;
+    display: flex;
+    flex-direction: row;
+    list-style: none;
+    gap: .5rem;
 }
 
 @media only screen and (min-width: 800px) {

@@ -1,9 +1,10 @@
 import './movieDetails.css';
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { useContext } from 'react';
 import AuthContext from '../../context/AuthContext';
 import movieDataSrv from '../../Services/movies';
 import auth from '../../Services/Users/auth';
+import { useNavigate } from 'react-router-dom';
 //Promise Tracker
 import { usePromiseTracker } from 'react-promise-tracker';
 import { trackPromise } from 'react-promise-tracker';
@@ -23,12 +24,15 @@ const MovieDetails = () => {
     const urlParams = new URLSearchParams(queryString);
     const id = urlParams.get('id');
 
+    // Navigate
+    const navigate = useNavigate();
+
     // Promise tracker
     const { promiseInProgress } = usePromiseTracker();
 
-    // useState needs to be initialized with empty nested arrays/objects that are used, else type will be undefined and page will fail to compile
+    // Comment and Details states
     const [movieDetails, setMovieDetails] = useState({genres:[], cast:[], directors:[], writers:[], imdb:{}});
-    const [movieComments, setMovieComments] = useState([{}]);
+    const [movieComments, setMovieComments] = useState([]);
 
     useEffect(() => {
         retrieveMovieDetails();
@@ -61,15 +65,50 @@ const MovieDetails = () => {
                     setMovieComments(response.data);
                 })
                 .catch(e => {
-                    console.log('Error at retrieveMovieComments: ' + e);
+                    console.log('Error at retrieveMovieComments(): ' + e);
                 })
         )
     }
 
+    // Paginate comments {
+        const [currentPage, setCurrentPage] = useState(1);
+        const [commentsPerPage] = useState(5);
+
+        const pageNumberClicked = (e) => {
+            setCurrentPage(e.target.id)
+        }
+
+        // Logic for displaying comments
+        const indexOfLastComment = currentPage * commentsPerPage;
+        const indexOfFirstComment = indexOfLastComment - commentsPerPage;
+        const currentComments = movieComments.slice(indexOfFirstComment, indexOfLastComment);
+
+        // Logic for displaying page numbers
+        const pageNumbers = [];
+        for (let i = 1; i <= Math.ceil(movieComments.length / commentsPerPage); i++) {
+            pageNumbers.push(i);
+        }
+
+        // Page element
+        const PageNumbersElement = () => { return (
+            <div className='paginationNumberContainer'>
+                            { pageNumbers.map(number => (
+                                        <li
+                                            key={number}
+                                            id={number}
+                                            onClick={pageNumberClicked}
+                                        >
+                                            {number}
+                                        </li>
+                                ))
+                            }
+
+            </div>
+        )}
+    // }
+
     // If image 404
-    const handleImgError = e => {
-        e.target.src = noImageAvailablePicture
-    }
+    const handleImgError = e => e.target.src = noImageAvailablePicture;
     
     // For the full plot button toggle
     const [fullPlotToggled, setPlotToggle] = useState(false);
@@ -166,41 +205,45 @@ const MovieDetails = () => {
             <div className='movieCommentContainer'>
                 <div className='commentBox'>
                     <h1>User Comments <FontAwesomeIcon icon={faCommentDots}/></h1>
-                        { loggedIn === true ? (
-                            <form className='commentForm' onSubmit={leaveComment}>
-                                <textarea 
-                                    className='commentTextInput'
-                                    placeholder='Enter your comment here...'
-                                    type='text' 
-                                    onChange={(e) => setUserComment(e.target.value)}
-                                />
-                                <input
-                                    type='submit'
-                                    value='Submit Comment' 
-                                    className="btn btn-outline-success"
-                                />
-                            </form>
-                        )
-                        :
-                        (
-                            'LOGIN TO POST COMMENTS'
-                        )}
-                        { movieComments.length >= 1 ? (
-                            movieComments.map((comment, i)=>(
-                                <div key={i}>
-                                    <div className="card text-dark bg-secondary mb-3">
-                                        <div className="card-body">
-                                            <h5 className="card-title">{comment.name}</h5>
-                                            <p className="card-text">{comment.text}</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            ))
-                        )
+                    { loggedIn === true ? (
+                        <form className='commentForm' onSubmit={leaveComment}>
+                            <textarea 
+                                className='commentTextInput'
+                                placeholder='Enter your comment here...'
+                                type='text' 
+                                onChange={(e) => setUserComment(e.target.value)}
+                            />
+                            <input
+                                type='submit'
+                                value='Submit Comment' 
+                                className="btn btn-outline-success"
+                            />
+                        </form>
+                    )
                     :
                     (
-                        "Nothing found"
+                        <p><a className='loginLink' onClick={() => navigate('/login')}>LOGIN</a> TO POST COMMENTS</p>
                     )}
+                    <PageNumbersElement/>
+                    { movieComments.length >= 1 ? (
+                        currentComments.map((comment)=>(
+                            <div key={comment._id}>
+                                <div className="card text-dark bg-light mb-3">
+                                    <div className="card-body">
+                                        <h5 className="card-title">{comment.name}</h5>
+                                        <hr></hr>
+                                        <p className="card-text commentText">{comment.text}</p>
+                                        <hr></hr>
+                                    </div>
+                                </div>
+                            </div>
+                        ))
+                    )
+                    :
+                    (
+                        <p className='commentText'>Be the first to comment on this movie!</p>
+                    )}
+                    <PageNumbersElement/>
                 </div>
             </div>
         </div>
