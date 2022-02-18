@@ -1,3 +1,8 @@
+@font-face {
+    font-family: 'Oswald';
+    src: local('Oswald') url(./assets/Fonts/Oswald/Oswald-Regular.ttf) format('truetype');
+}
+
 body {
     background-image: url('./assets/background.jpg');
     min-height: 100%;
@@ -5,4 +10,5 @@ body {
     background-attachment: fixed;
     background-position: center;
     background-size: cover;
+    font-family: 'Oswald', sans-serif !important;
 }
