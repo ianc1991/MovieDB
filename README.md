@@ -1,6 +1,6 @@
 # MovieDB
 
-A curent work in progress MERN project using the default MongoDB Atlas Mflix database. 
+A current work in progress MERN project using the default MongoDB Atlas Mflix database. 
 ### Current capabilities
 
 * Bootstrap components are used to get the initial layout of the website done.
